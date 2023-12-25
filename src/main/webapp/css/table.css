@@ -1,0 +1,56 @@
+
+table {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #ddd;
+}
+
+.status {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    border: transparent;
+    /*border-collapse: collapse;*/
+}
+
+thead {
+    background-color: #f2f2f2;
+    /*border-collapse: collapse;*/
+}
+
+tr:nth-child(even) {
+    background-color: #eee;
+}
+
+/* input fit in cell table */
+/* align text middle*/
+input {
+    width: 100%;
+    padding: 12px 20px;
+    display: inline-block;
+    border: transparent;
+    box-sizing: border-box;
+    background-color: transparent;
+    text-align: center;
+    word-wrap: break-word;
+}
+
+select {
+    padding: 12px 20px;
+    display: inline-block;
+    border: transparent;
+    box-sizing: border-box;
+    background-color: transparent;
+    text-align: center;
+    word-wrap: break-word;
+}
+
+
+.header {
+    padding: 60px;
+    text-align: center;
+    background: #1abc9c;
+    color: white;
+    font-size: 30px;
+}
