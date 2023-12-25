@@ -6,7 +6,7 @@ import java.util.List;
 public class Region {
     private int id;
     private String name;
-    private List<IndustrialAgriculturalStatus> statuses;
+    private StatusList statusList;
     private Population population;
     private NatureStatus natureStatus;
 
@@ -26,12 +26,12 @@ public class Region {
         this.name = name;
     }
 
-    public List<IndustrialAgriculturalStatus> getStatuses() {
-        return statuses;
+    public StatusList getStatuses() {
+        return statusList;
     }
 
-    public void setStatuses(List<IndustrialAgriculturalStatus> statuses) {
-        this.statuses = statuses;
+    public void setStatuses(StatusList statusList) {
+        this.statusList = statusList;
     }
 
     public Population getPopulation() {

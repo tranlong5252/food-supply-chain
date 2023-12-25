@@ -9,9 +9,7 @@ public class IndustrialAgriculturalStatus {
 	private String name;
 	private StatusLevel level;
 	private double value;
-
 	private int potential;
-
 	private int development;
 
 	public int getId() {

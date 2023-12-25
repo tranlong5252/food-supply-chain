@@ -48,7 +48,8 @@
                             <td>${region.id}</td>
                             <td>
                                 <label>
-                                    <input type="text" name="regionName" value="${region.name}" form="editRegion">
+                                    <input type="text" name="regionName" value="${region.name}"
+                                           form="editRegion_${region.id}">
                                 </label>
                             </td>
 
@@ -59,6 +60,8 @@
                                         <th>Name</th>
                                         <th>Level</th>
                                         <th>Value</th>
+                                        <th>Potential</th>
+                                        <th>Development</th>
                                         <th>Action</th>
                                     </tr>
                                     <tbody class="status">
@@ -66,12 +69,13 @@
                                         <tr class="status">
                                             <td>
                                                 <label>
-                                                    <input type="text" name="statusName" value="${status.name}" form="deleteRegionStatus">
+                                                    <input type="text" name="statusName_${status.id}" value="${status.name}"
+                                                           form="editRegion_${region.id}">
                                                 </label>
                                             </td>
                                             <td>
                                                 <label>
-                                                    <select name="statusLevel" form="deleteRegionStatus">
+                                                    <select name="statusLevel_${status.id}" form="editRegion_${region.id}">
                                                         <c:forEach items="${StatusLevel.values()}" var="level">
                                                             <option value="${level.value}" ${level.value == status.level.value ? 'selected' : ''}>${level}</option>
                                                         </c:forEach>
@@ -80,7 +84,22 @@
                                             </td>
                                             <td>
                                                 <label>
-                                                    <input type="number" name="statusValue" value="${status.value}" form="deleteRegionStatus">
+                                                    <input type="number" name="statusValue_${status.id}" value="${status.value}"
+                                                           form="editRegion_${region.id}" min="0" max="100" step=".01">
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <label>
+                                                    <input type="number" name="statusPotential_${status.id}"
+                                                           value="${status.potential}" form="editRegion_${region.id}" min="0"
+                                                           max="10" step="1">
+                                                </label>
+                                            </td>
+                                            <td>
+                                                <label>
+                                                    <input type="number" name="statusDevelopment_${status.id}"
+                                                           value="${status.development}" form="editRegion_${region.id}"
+                                                           min="0" max="10" step="1">
                                                 </label>
                                             </td>
                                             <td>
@@ -90,7 +109,7 @@
                                                     <div class="input-group">
                                                         <button type="submit" class="btn btn-sm btn-secondary"
                                                                 name="action"
-                                                                value="editStatus">Delete
+                                                                value="deleteRegionStatus">Delete
                                                         </button>
                                                     </div>
                                                 </form>
@@ -100,7 +119,8 @@
                                     <tr class="status">
                                         <td>
                                             <label>
-                                                <input type="text" name="statusName" form="addRegionStatus_${region.id}">
+                                                <input type="text" name="statusName" form="addRegionStatus_${region.id}"
+                                                       placeholder="Type">
                                             </label>
                                         </td>
                                         <td>
@@ -114,7 +134,22 @@
                                         </td>
                                         <td>
                                             <label>
-                                                <input type="number" name="statusValue" form="addRegionStatus_${region.id}">
+                                                <input type="number" name="statusValue"
+                                                       form="addRegionStatus_${region.id}" min="0" max="100" step=".01" placeholder="Type">
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <label>
+                                                <input type="number" name="statusPotential"
+                                                       form="addRegionStatus_${region.id}" min="0" max="10" step="1"
+                                                       placeholder="Type">
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <label>
+                                                <input type="number" name="statusDevelopment"
+                                                       form="addRegionStatus_${region.id}"
+                                                       min="0" max="10" step="1" placeholder="Type">
                                             </label>
                                         </td>
                                         <td>
@@ -136,36 +171,43 @@
 
                             <td>
                                 <label>
-                                    <input type="text" name="regionPopDis" value="${region.population.distribution}" form="editRegion">
+                                    <input type="text" name="regionPopDis" value="${region.population.distribution}"
+                                           form="editRegion_${region.id}">
                                 </label>
                             </td>
                             <td>
                                 <label>
-                                    <input type="text" name="regionPopMig" value="${region.population.migration}" form="editRegion">
+                                    <input type="text" name="regionPopMig" value="${region.population.migration}"
+                                           form="editRegion_${region.id}">
                                 </label>
                             </td>
                             <td>
                                 <label>
-                                    <input type="text" name="regionPopUrb" value="${region.population.urbanization}" form="editRegion">
+                                    <input type="text" name="regionPopUrb" value="${region.population.urbanization}"
+                                           form="editRegion_${region.id}">
                                 </label>
                             </td>
                             <td>
                                 <label>
-                                    <input type="text" name="regionNatAgri" value="${region.natureStatus.agricultureLand}" form="editRegion">
+                                    <input type="text" name="regionNatAgri"
+                                           value="${region.natureStatus.agricultureLand}"
+                                           form="editRegion_${region.id}">
                                 </label>
                             </td>
                             <td>
                                 <label>
-                                    <input type="text" name="regionNatFor" value="${region.natureStatus.forestLand}" form="editRegion">
+                                    <input type="text" name="regionNatFor" value="${region.natureStatus.forestLand}"
+                                           form="editRegion_${region.id}">
                                 </label>
                             </td>
                             <td>
                                 <label>
-                                    <input type="text" name="regionNatDis" value="${region.natureStatus.disaster}" form="editRegion">
+                                    <input type="text" name="regionNatDis" value="${region.natureStatus.disaster}"
+                                           form="editRegion_${region.id}">
                                 </label>
                             </td>
                             <td>
-                                <form action="Region" id="editRegion">
+                                <form action="Region" id="editRegion_${region.id}">
                                     <input type="hidden" name="regionId" value="${region.id}">
                                     <div class="input-group">
                                         <button type="submit" class="btn btn-sm btn-secondary" name="action"
