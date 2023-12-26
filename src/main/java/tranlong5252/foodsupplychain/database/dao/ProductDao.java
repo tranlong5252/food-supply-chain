@@ -1,4 +1,4 @@
-package tranlong5252.foodsupplychain.dao.impl.region;
+package tranlong5252.foodsupplychain.database.dao;
 
 import tranlong5252.foodsupplychain.model.Product;
 

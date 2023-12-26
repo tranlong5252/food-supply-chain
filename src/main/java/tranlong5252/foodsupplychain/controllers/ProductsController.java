@@ -1,6 +1,6 @@
 package tranlong5252.foodsupplychain.controllers;
 
-import tranlong5252.foodsupplychain.dao.impl.region.ProductDao;
+import tranlong5252.foodsupplychain.database.dao.ProductDao;
 import tranlong5252.foodsupplychain.model.Account;
 import tranlong5252.foodsupplychain.model.Product;
 import tranlong5252.foodsupplychain.utils.Util;
@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -22,6 +23,8 @@ public class ProductsController extends HttpServlet {
             req.setAttribute("products", products);
             req.getRequestDispatcher("products.jsp").forward(req, resp);
         } else {
+            HttpSession session = req.getSession();
+            session.setAttribute("redirect", "Products");
             resp.sendRedirect("Login");
         }
     }

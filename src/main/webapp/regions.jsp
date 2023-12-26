@@ -49,7 +49,7 @@
                             <td>
                                 <label>
                                     <input type="text" name="regionName" value="${region.name}"
-                                           form="editRegion_${region.id}">
+                                           form="editRegion_${region.id}" required>
                                 </label>
                             </td>
 
@@ -70,12 +70,12 @@
                                             <td>
                                                 <label>
                                                     <input type="text" name="statusName_${status.id}" value="${status.name}"
-                                                           form="editRegion_${region.id}">
+                                                           form="editRegion_${region.id}" required>
                                                 </label>
                                             </td>
                                             <td>
                                                 <label>
-                                                    <select name="statusLevel_${status.id}" form="editRegion_${region.id}">
+                                                    <select name="statusLevel_${status.id}" form="editRegion_${region.id}" required>
                                                         <c:forEach items="${StatusLevel.values()}" var="level">
                                                             <option value="${level.value}" ${level.value == status.level.value ? 'selected' : ''}>${level}</option>
                                                         </c:forEach>
@@ -85,21 +85,21 @@
                                             <td>
                                                 <label>
                                                     <input type="number" name="statusValue_${status.id}" value="${status.value}"
-                                                           form="editRegion_${region.id}" min="0" max="100" step=".01">
+                                                           form="editRegion_${region.id}" min="0" max="100" step=".01" required>
                                                 </label>
                                             </td>
                                             <td>
                                                 <label>
                                                     <input type="number" name="statusPotential_${status.id}"
                                                            value="${status.potential}" form="editRegion_${region.id}" min="0"
-                                                           max="10" step="1">
+                                                           max="10" step="1" required>
                                                 </label>
                                             </td>
                                             <td>
                                                 <label>
                                                     <input type="number" name="statusDevelopment_${status.id}"
                                                            value="${status.development}" form="editRegion_${region.id}"
-                                                           min="0" max="10" step="1">
+                                                           min="0" max="10" step="1" required>
                                                 </label>
                                             </td>
                                             <td>
@@ -120,12 +120,12 @@
                                         <td>
                                             <label>
                                                 <input type="text" name="statusName" form="addRegionStatus_${region.id}"
-                                                       placeholder="Type">
+                                                       placeholder="Type" required>
                                             </label>
                                         </td>
                                         <td>
                                             <label>
-                                                <select name="statusLevel" form="addRegionStatus_${region.id}">
+                                                <select name="statusLevel" form="addRegionStatus_${region.id}" required>
                                                     <c:forEach items="${StatusLevel.values()}" var="level">
                                                         <option value="${level.value}">${level}</option>
                                                     </c:forEach>
@@ -135,21 +135,21 @@
                                         <td>
                                             <label>
                                                 <input type="number" name="statusValue"
-                                                       form="addRegionStatus_${region.id}" min="0" max="100" step=".01" placeholder="Type">
+                                                       form="addRegionStatus_${region.id}" min="0" max="100" step=".01" placeholder="Type" required>
                                             </label>
                                         </td>
                                         <td>
                                             <label>
                                                 <input type="number" name="statusPotential"
                                                        form="addRegionStatus_${region.id}" min="0" max="10" step="1"
-                                                       placeholder="Type">
+                                                       placeholder="Type" required>
                                             </label>
                                         </td>
                                         <td>
                                             <label>
                                                 <input type="number" name="statusDevelopment"
                                                        form="addRegionStatus_${region.id}"
-                                                       min="0" max="10" step="1" placeholder="Type">
+                                                       min="0" max="10" step="1" placeholder="Type" required>
                                             </label>
                                         </td>
                                         <td>
@@ -172,38 +172,38 @@
                             <td>
                                 <label>
                                     <input type="text" name="regionPopDis" value="${region.population.distribution}"
-                                           form="editRegion_${region.id}">
+                                           form="editRegion_${region.id}" required>
                                 </label>
                             </td>
                             <td>
                                 <label>
                                     <input type="text" name="regionPopMig" value="${region.population.migration}"
-                                           form="editRegion_${region.id}">
+                                           form="editRegion_${region.id}" required>
                                 </label>
                             </td>
                             <td>
                                 <label>
                                     <input type="text" name="regionPopUrb" value="${region.population.urbanization}"
-                                           form="editRegion_${region.id}">
+                                           form="editRegion_${region.id}" required>
                                 </label>
                             </td>
                             <td>
                                 <label>
                                     <input type="text" name="regionNatAgri"
                                            value="${region.natureStatus.agricultureLand}"
-                                           form="editRegion_${region.id}">
+                                           form="editRegion_${region.id}" required>
                                 </label>
                             </td>
                             <td>
                                 <label>
                                     <input type="text" name="regionNatFor" value="${region.natureStatus.forestLand}"
-                                           form="editRegion_${region.id}">
+                                           form="editRegion_${region.id}" required>
                                 </label>
                             </td>
                             <td>
                                 <label>
                                     <input type="text" name="regionNatDis" value="${region.natureStatus.disaster}"
-                                           form="editRegion_${region.id}">
+                                           form="editRegion_${region.id}" required>
                                 </label>
                             </td>
                             <td>
@@ -231,38 +231,38 @@
                     <td></td>
                     <td>
                         <label>
-                            <input type="text" name="regionName" form="addRegion" placeholder="Enter name">
+                            <input type="text" name="regionName" form="addRegion" placeholder="Enter name" required>
                         </label>
                     </td>
                     <td></td>
                     <td>
                         <label>
-                            <input type="number" name="regionPopDis" form="addRegion" placeholder="Enter number">
+                            <input type="number" name="regionPopDis" form="addRegion" placeholder="Enter number" required>
                         </label>
                     </td>
                     <td>
                         <label>
-                            <input type="number" name="regionPopMig" form="addRegion" placeholder="Enter number">
+                            <input type="number" name="regionPopMig" form="addRegion" placeholder="Enter number" required>
                         </label>
                     </td>
                     <td>
                         <label>
-                            <input type="number" name="regionPopUrb" form="addRegion" placeholder="Enter number">
+                            <input type="number" name="regionPopUrb" form="addRegion" placeholder="Enter number" required>
                         </label>
                     </td>
                     <td>
                         <label>
-                            <input type="number" name="regionNatAgri" form="addRegion" placeholder="Enter number">
+                            <input type="number" name="regionNatAgri" form="addRegion" placeholder="Enter number" required>
                         </label>
                     </td>
                     <td>
                         <label>
-                            <input type="number" name="regionNatFor" form="addRegion" placeholder="Enter number">
+                            <input type="number" name="regionNatFor" form="addRegion" placeholder="Enter number" required>
                         </label>
                     </td>
                     <td>
                         <label>
-                            <input type="text" name="regionNatDis" form="addRegion" placeholder="Type">
+                            <input type="text" name="regionNatDis" form="addRegion" placeholder="Type" required>
                         </label>
                     </td>
                     <td>

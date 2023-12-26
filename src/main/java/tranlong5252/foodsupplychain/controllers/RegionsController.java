@@ -1,9 +1,8 @@
 package tranlong5252.foodsupplychain.controllers;
 
-import tranlong5252.foodsupplychain.dao.impl.region.RegionDao;
+import tranlong5252.foodsupplychain.database.dao.RegionDao;
 import tranlong5252.foodsupplychain.model.Account;
 import tranlong5252.foodsupplychain.model.Region;
-import tranlong5252.foodsupplychain.model.RegionList;
 import tranlong5252.foodsupplychain.utils.Util;
 
 import javax.servlet.*;
@@ -16,10 +15,12 @@ public class RegionsController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Account account = Util.getAccount(req);
         if (account != null) {
-            RegionList regions = RegionDao.getListRegions();
+            List<Region> regions = RegionDao.getInstance().getList();
             req.setAttribute("regions", regions);
             req.getRequestDispatcher("regions.jsp").forward(req, resp);
         } else {
+            HttpSession session = req.getSession();
+            session.setAttribute("redirect", "Regions");
             resp.sendRedirect("Login");
         }
     }

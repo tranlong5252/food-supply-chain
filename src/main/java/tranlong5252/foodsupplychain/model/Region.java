@@ -1,8 +1,5 @@
 package tranlong5252.foodsupplychain.model;
 
-
-import java.util.List;
-
 public class Region {
     private int id;
     private String name;

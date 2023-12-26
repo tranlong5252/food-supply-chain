@@ -1,6 +1,6 @@
 package tranlong5252.foodsupplychain.controllers;
 
-import tranlong5252.foodsupplychain.dao.impl.region.ProductDao;
+import tranlong5252.foodsupplychain.database.dao.ProductDao;
 import tranlong5252.foodsupplychain.model.Cart;
 import tranlong5252.foodsupplychain.model.CartProduct;
 import tranlong5252.foodsupplychain.model.Product;

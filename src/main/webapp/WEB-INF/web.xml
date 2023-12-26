@@ -6,6 +6,9 @@
             30
         </session-timeout>
     </session-config>
+    <listener>
+        <listener-class>tranlong5252.foodsupplychain.Main</listener-class>
+    </listener>
     <servlet>
         <servlet-name>LoginController</servlet-name>
         <servlet-class>tranlong5252.foodsupplychain.controllers.LoginController</servlet-class>

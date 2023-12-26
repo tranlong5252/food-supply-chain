@@ -1,7 +1,7 @@
 package tranlong5252.foodsupplychain.controllers;
 
-import tranlong5252.foodsupplychain.dao.impl.ClientCompanyDao;
-import tranlong5252.foodsupplychain.dao.impl.region.RegionDao;
+import tranlong5252.foodsupplychain.database.dao.ClientCompanyDao;
+import tranlong5252.foodsupplychain.database.dao.RegionDao;
 import tranlong5252.foodsupplychain.model.Account;
 import tranlong5252.foodsupplychain.model.Region;
 import tranlong5252.foodsupplychain.utils.Util;
@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -20,14 +21,16 @@ public class CompaniesController extends HttpServlet {
         Account account = Util.getAccount(req);
         if (account != null) {
             if (req.getAttribute("companies") == null) {
-                req.setAttribute("companies", ClientCompanyDao.getListCompanies());
+                req.setAttribute("companies", ClientCompanyDao.getInstance().getList());
             }
 
-            List<Region> regions = RegionDao.getListRegions();
+            List<Region> regions = RegionDao.getInstance().getList();
             req.setAttribute("regions", regions);
 
             req.getRequestDispatcher("companies.jsp").forward(req, resp);
         } else {
+            HttpSession session = req.getSession();
+            session.setAttribute("redirect", "Companies");
             resp.sendRedirect("Login");
         }
     }

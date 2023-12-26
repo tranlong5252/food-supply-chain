@@ -1,6 +1,6 @@
 package tranlong5252.foodsupplychain.controllers;
 
-import tranlong5252.foodsupplychain.dao.impl.region.AccountDao;
+import tranlong5252.foodsupplychain.database.dao.AccountDao;
 import tranlong5252.foodsupplychain.model.Account;
 
 import javax.servlet.ServletException;
@@ -22,7 +22,7 @@ public class LoginController extends HttpServlet {
         if (account != null) {
             Cookie cookie = new Cookie("accountId", String.valueOf(account.getId()));
             resp.addCookie(cookie);
-            resp.sendRedirect("Products");
+            resp.sendRedirect((String) session.getAttribute("redirect"));
         } else {
             req.setAttribute("error", "Wrong username or password");
             req.getRequestDispatcher("login.jsp").forward(req, resp);
