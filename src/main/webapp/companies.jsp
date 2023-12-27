@@ -5,6 +5,12 @@
 <html lang="en">
 <head>
     <title>Client companies manager</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+            crossorigin="anonymous"></script>
 </head>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -45,37 +51,42 @@
     </c:if>
     <div class="row">
         <div class="col">
-            <h2>Products</h2>
-            <table class="table table-primary table-striped">
-                <thead>
+            <h2>Client companies management</h2>
+            <div class="table-responsive">
+                <table class="table table-sm table-primary table-striped table-hover caption-top table-bordered">
+                <caption>Companies</caption>
+                <thead class="table-light">
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Tax code</th>
-                    <th>Region</th>
-                    <th>Industry/Agriculture</th>
-                    <th>Action</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Tax code</th>
+                    <th scope="col">Region</th>
+                    <th scope="col">Industry/Agriculture</th>
+                    <th scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody>
                 <c:if test="${requestScope.companies != null}">
                     <c:forEach items="${requestScope.companies}" var="company">
                         <tr>
-                            <td>${company.id}</td>
+                            <td>
+                                <label class="col-form-label">${company.id}</label>
+                            </td>
                             <td>
                                 <label>
-                                    <input type="text" name="companyName" form="edit" value="${company.name}">
+                                    <input class="form-control-plaintext" type="text" name="companyName" form="edit"
+                                           value="${company.name}">
                                 </label>
                             </td>
                             <td>
                                 <label>
-                                    <input type="text" name="companyTaxCode" form="edit"
+                                    <input class="form-control-plaintext" type="text" name="companyTaxCode" form="edit"
                                            value="${company.taxCode}">
                                 </label>
                             </td>
                             <td>
                                 <label>
-                                    <select name="companyRegion" form="edit" required>
+                                    <select class="form-control-plaintext" name="companyRegion" form="edit" required>
                                         <option value="">Choose region</option>
                                         <c:forEach items="${requestScope.regions}" var="region">
                                             <option ${region.id == company.region.id
@@ -89,47 +100,56 @@
                             </td>
                             <td>
                                 <label>
-                                    <input type="text" name="companySpecification" form="edit"
+                                    <input class="form-control-plaintext" type="text" name="companySpecification"
+                                           form="edit"
                                            value="${company.specification}">
                                 </label>
                             </td>
                             <td>
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <button type="submit" class="btn btn-secondary" name="action"
+                                            form="edit"
+                                            value="editCompany">Update
+                                    </button>
+                                    <button type="submit" class="btn btn-danger" name="action"
+                                            form="remove"
+                                            value="deleteCompany">Delete
+                                    </button>
+                                </div>
                                 <form action="Company" id="edit">
                                     <input type="hidden" name="companyId" value="${company.id}">
                                     <div class="input-group">
-                                        <button type="submit" class="btn btn-sm btn-secondary" name="action"
-                                                value="editCompany">Update
-                                        </button>
+
                                     </div>
                                 </form>
-                                <form action="Company">
+                                <form action="Company" id="remove">
                                     <input type="hidden" name="companyId" value="${company.id}">
                                     <div class="input-group">
-                                        <button type="submit" class="btn btn-sm btn-secondary" name="action"
-                                                value="deleteCompany">Remove
-                                        </button>
+
                                     </div>
                                 </form>
                             </td>
                         </tr>
                     </c:forEach>
                 </c:if>
+                </tbody>
+                    <tfoot class="table-light">
                 <tr>
                     <td>
                     </td>
                     <td>
                         <label>
-                            <input type="text" name="companyName" form="add">
+                            <input class="form-control-plaintext" type="text" name="companyName" form="add" placeholder="Enter name">
                         </label>
                     </td>
                     <td>
                         <label>
-                            <input type="text" name="companyTaxCode" form="add">
+                            <input class="form-control-plaintext" type="text" name="companyTaxCode" form="add" placeholder="Enter Tax code">
                         </label>
                     </td>
                     <td>
                         <label>
-                            <select name="companyRegion" form="add" required>
+                            <select class="form-control-plaintext" name="companyRegion" form="add" required>
                                 <option value="">Choose region</option>
                                 <c:forEach items="${requestScope.regions}" var="region">
                                 <option value="${region.id}">${region.name}</option>
@@ -138,16 +158,18 @@
                     </td>
                     <td>
                         <label>
-                            <input type="text" name="companySpecification" form="add">
+                            <input class="form-control-plaintext" type="text" name="companySpecification" form="add" placeholder="Type">
                         </label>
                     <td>
-                        <button type="submit" class="btn btn-sm btn-secondary" name="action" value="addCompany"
+                        <button type="submit" class="btn btn-sm btn-success" name="action" value="addCompany"
                                 form="add">
                             Add
                         </button>
                     </td>
-                </tbody>
+                </tr>
+                </tfoot>
             </table>
+            </div>
         </div>
     </div>
 </div>

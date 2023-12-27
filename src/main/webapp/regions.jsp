@@ -11,6 +11,7 @@
             integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
             crossorigin="anonymous"></script>
     <%--    <link rel="stylesheet" href="css/table.css">--%>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 <div class="header">
@@ -63,7 +64,7 @@
     <div class="row">
         <div class="col">
             <div class="table-responsive">
-                <table class="table table-sm table-primary table-striped table-hover caption-top">
+                <table class="table table-sm table-primary table-striped table-hover caption-top table-bordered">
                     <caption>List of users</caption>
                     <thead class="table-light">
                 <tr>
@@ -96,7 +97,7 @@
                                     <input type="hidden" name="regionId" value="${region.id}">
                                 </form>
                             </td>
-                            <td class="">
+                            <td>
                                 <label>
                                     <input class="form-control-plaintext" type="text" name="regionName"
                                            value="${region.name}"
@@ -243,7 +244,7 @@
 
             <div class="col">
                 <h1>${sessionScope.region.name}</h1>
-                <table class="table table-secondary table-striped table-hover table-sm">
+                <table class="table table-secondary table-striped table-hover table-sm table-bordered">
                     <thead class="status">
                     <tr class="status">
                         <th colspan="6">Industrial and Agricultural status</th>
