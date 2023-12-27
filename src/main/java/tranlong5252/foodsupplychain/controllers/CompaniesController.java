@@ -20,8 +20,14 @@ public class CompaniesController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Account account = Util.getAccount(req);
         if (account != null) {
-            if (req.getAttribute("companies") == null) {
-                req.setAttribute("companies", ClientCompanyDao.getInstance().getList());
+            String action = req.getParameter("action");
+            switch (action != null ? action : "") {
+                case "searchCompanies":
+                    searchCompanies(req, resp);
+                    break;
+                default:
+                    req.setAttribute("companies", ClientCompanyDao.getInstance().getList());
+                    break;
             }
 
             List<Region> regions = RegionDao.getInstance().getList();
@@ -33,6 +39,11 @@ public class CompaniesController extends HttpServlet {
             session.setAttribute("redirect", "Companies");
             resp.sendRedirect("Login");
         }
+    }
+
+    private void searchCompanies(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String name = req.getParameter("companyName");
+        req.setAttribute("companies", ClientCompanyDao.getInstance().search(name));
     }
 }
 

@@ -84,11 +84,11 @@ public class ClientCompanyDaoImpl implements ClientCompanyDao {
     }
 
     @Override
-    public ClientCompany search(String name) {
-        String stm = "SELECT * FROM client_company WHERE name = CONCAT('%', ?, '%')";
+    public List<ClientCompany> search(String name) {
+        String stm = "SELECT * FROM client_company WHERE name LIKE CONCAT('%', ?, '%')";
         return statement(stm, statement -> {
             statement.setString(1, name);
-            return fetch(statement, resultSet -> newCompany(
+            return fetchRecords(statement, resultSet -> newCompany(
                     resultSet.getInt("id"),
                     resultSet.getString("name"),
                     resultSet.getString("tax_code"),

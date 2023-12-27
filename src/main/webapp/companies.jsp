@@ -52,6 +52,18 @@
     <div class="row">
         <div class="col">
             <h2>Client companies management</h2>
+            <div class="find-object">
+                <form action="Companies" id="searchCompanies">
+                    <div class="input-group">
+                        <label>
+                            <input type="text" name="companyName" placeholder="Find by name">
+                        </label>
+                        <button type="submit" class="btn btn-sm btn-secondary" name="action" value="searchCompanies">
+                            Search
+                        </button>
+                    </div>
+                </form>
+            </div>
             <div class="table-responsive">
                 <table class="table table-sm table-primary table-striped table-hover caption-top table-bordered">
                 <caption>Companies</caption>

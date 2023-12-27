@@ -4,6 +4,7 @@ import tranlong5252.foodsupplychain.database.DataAccess;
 import tranlong5252.foodsupplychain.model.ClientCompany;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 public interface ClientCompanyDao extends DataAccess<ClientCompany> {
 
@@ -17,5 +18,5 @@ public interface ClientCompanyDao extends DataAccess<ClientCompany> {
         }
     }
 
-    ClientCompany search(String name);
+    List<ClientCompany> search(String name);
 }
