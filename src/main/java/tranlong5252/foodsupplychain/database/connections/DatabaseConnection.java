@@ -1,13 +1,10 @@
 package tranlong5252.foodsupplychain.database.connections;
 
-import tranlong5252.foodsupplychain.Main;
 import tranlong5252.foodsupplychain.database.connections.types.MySqlDBC;
 import tranlong5252.foodsupplychain.utils.Logger;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public abstract class DatabaseConnection {
     protected Connection connection;
