@@ -107,7 +107,7 @@ public class RegionController extends HttpServlet {
     }
 
     private void deleteRegion(HttpServletRequest req, HttpServletResponse resp) {
-        //HttpSession session = req.getSession();
+        HttpSession session = req.getSession();
 
         try {
             int id = Integer.parseInt(req.getParameter("regionId"));
@@ -118,6 +118,10 @@ public class RegionController extends HttpServlet {
             }
             RegionDao.getInstance().delete(region);
             //session.setAttribute("regions", regions);
+            Region regionSession = (Region) session.getAttribute("region");
+            if (region.getId() == regionSession.getId()) {
+                session.removeAttribute("region");
+            }
         } catch (Exception e) {
             req.setAttribute("error", e.getMessage());
         }
@@ -126,7 +130,7 @@ public class RegionController extends HttpServlet {
 
 
     private void addRegionStatus(HttpServletRequest req, HttpServletResponse resp) {
-        //HttpSession session = req.getSession();
+        HttpSession session = req.getSession();
         //List<Region> regions = RegionDao.getInstance().getList();
         //if (regions != null) {
         try {
@@ -149,7 +153,8 @@ public class RegionController extends HttpServlet {
             status.setId(id);
             region.getStatuses().add(status);
             RegionDao.getInstance().update(region);
-            //session.setAttribute("regions", regions);
+
+            session.setAttribute("region", region);
         } catch (Exception e) {
             req.setAttribute("error", e.getMessage());
             e.printStackTrace();
@@ -174,6 +179,7 @@ public class RegionController extends HttpServlet {
                     IndustrialStatusDao.getInstance().delete(status);
                     RegionDao.getInstance().update(region);
                     session.setAttribute("regions", regions);
+                    session.setAttribute("region", region);
                 } else {
                     req.setAttribute("error", "Không tìm thấy trạng thái");
                 }

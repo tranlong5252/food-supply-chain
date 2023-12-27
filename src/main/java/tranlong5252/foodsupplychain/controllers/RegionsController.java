@@ -15,9 +15,6 @@ public class RegionsController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Account account = Util.getAccount(req);
         if (account != null) {
-            List<Region> regions = RegionDao.getInstance().getList();
-            req.setAttribute("regions", regions);
-            req.getRequestDispatcher("regions.jsp").forward(req, resp);
 
             String action = req.getParameter("action");
             switch (action != null ? action : "") {
@@ -28,10 +25,31 @@ public class RegionsController extends HttpServlet {
                     req.setAttribute("regions", RegionDao.getInstance().getList());
                     break;
             }
+            switch (action != null ? action : "") {
+                case "selectRegion":
+                    int regionId = Integer.parseInt(req.getParameter("regionId"));
+                    Region region = RegionDao.getInstance().get(regionId);
+                    req.getSession().setAttribute("region", region);
+                    resp.sendRedirect("Regions");
+                    break;
+                case "closeRegionStatus":
+                    req.getSession().removeAttribute("region");
+                    resp.sendRedirect("Regions");
+                    break;
+                default:
+                    req.getRequestDispatcher("regions.jsp").forward(req, resp);
+                    break;
+            }
+
         } else {
             HttpSession session = req.getSession();
             session.setAttribute("redirect", "Regions");
             resp.sendRedirect("Login");
         }
+    }
+
+    private void searchRegions(HttpServletRequest req, HttpServletResponse resp) {
+        String name = req.getParameter("regionName");
+        req.setAttribute("regions", RegionDao.getInstance().search(name));
     }
 }
