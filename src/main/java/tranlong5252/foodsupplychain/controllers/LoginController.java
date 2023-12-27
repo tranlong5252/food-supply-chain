@@ -22,7 +22,12 @@ public class LoginController extends HttpServlet {
         if (account != null) {
             Cookie cookie = new Cookie("accountId", String.valueOf(account.getId()));
             resp.addCookie(cookie);
-            resp.sendRedirect((String) session.getAttribute("redirect"));
+            String redirect = (String) session.getAttribute("redirect");
+            if (redirect == null || redirect.isEmpty()) {
+                resp.sendRedirect(resp.encodeRedirectURL(req.getContextPath() + "/"));
+                return;
+            }
+            resp.sendRedirect(redirect);
         } else {
             req.setAttribute("error", "Wrong username or password");
             req.getRequestDispatcher("login.jsp").forward(req, resp);
