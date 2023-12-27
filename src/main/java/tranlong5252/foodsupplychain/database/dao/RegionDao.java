@@ -4,6 +4,7 @@ import tranlong5252.foodsupplychain.database.DataAccess;
 import tranlong5252.foodsupplychain.model.Region;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 public interface RegionDao extends DataAccess<Region> {
 
@@ -16,4 +17,6 @@ public interface RegionDao extends DataAccess<Region> {
             return null;
         }
     }
+
+    List<Region> search(String name);
 }

@@ -16,4 +16,6 @@ public interface ClientCompanyDao extends DataAccess<ClientCompany> {
             return null;
         }
     }
+
+    ClientCompany search(String name);
 }

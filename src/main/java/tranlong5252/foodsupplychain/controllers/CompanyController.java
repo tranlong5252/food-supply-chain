@@ -68,7 +68,6 @@ public class CompanyController extends HttpServlet {
     }
 
     private void deleteClientCompany(HttpServletRequest req, HttpServletResponse resp) {
-
         try {
             int id = Integer.parseInt(req.getParameter("companyId"));
             ClientCompany company = ClientCompanyDao.getInstance().get(id);
@@ -87,6 +86,9 @@ public class CompanyController extends HttpServlet {
             editClientCompany(req, resp);
         } else if ("deleteCompany".equals(action)) {
             deleteClientCompany(req, resp);
+        } else if ("searchCompany".equals(action)) {
+            String name = req.getParameter("companyName");
+            req.setAttribute("companies", ClientCompanyDao.getInstance().search(name));
         }
         if (req.getAttribute("error") != null) {
             req.getRequestDispatcher("Companies").forward(req, resp);

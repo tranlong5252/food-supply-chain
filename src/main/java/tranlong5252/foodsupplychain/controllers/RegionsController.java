@@ -18,6 +18,16 @@ public class RegionsController extends HttpServlet {
             List<Region> regions = RegionDao.getInstance().getList();
             req.setAttribute("regions", regions);
             req.getRequestDispatcher("regions.jsp").forward(req, resp);
+
+            String action = req.getParameter("action");
+            switch (action != null ? action : "") {
+                case "searchRegions":
+                    searchRegions(req, resp);
+                    break;
+                default:
+                    req.setAttribute("regions", RegionDao.getInstance().getList());
+                    break;
+            }
         } else {
             HttpSession session = req.getSession();
             session.setAttribute("redirect", "Regions");

@@ -135,4 +135,26 @@ public class RegionDaoImpl implements RegionDao {
             return null;
         });
     }
+
+    @Override
+    public List<Region> search(String name) {
+        return statement("SELECT * FROM region WHERE name LIKE CONCAT( '%',?,'%')" , statement -> {
+            statement.setString(1, name);
+            List<Region> region = fetchRecords(statement, resultSet -> {
+                Population population = new Population();
+                population.setDistribution(resultSet.getInt("distribution"));
+                population.setMigration(resultSet.getInt("migration"));
+                population.setUrbanization(resultSet.getInt("urbanization"));
+                NatureStatus natureStatus = new NatureStatus();
+                natureStatus.setAgricultureLand(resultSet.getInt("agriculture_land"));
+                natureStatus.setForestLand(resultSet.getInt("forest_land"));
+                natureStatus.setDisaster(resultSet.getString("disaster"));
+                return newRegion(resultSet.getInt("id"), resultSet.getString("name"), population, natureStatus);
+            });
+            if (region != null) {
+                region.forEach(region1 -> region1.setStatuses(getRegionStatuses(region1.getId())));
+            }
+            return region;
+        });
+    }
 }
