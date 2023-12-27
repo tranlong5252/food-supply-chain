@@ -5,17 +5,38 @@
 <html lang="en">
 <head>
     <title>Client companies manager</title>
-    <link rel="stylesheet" href="css/table.css">
 </head>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <body>
 
-
 <div class="header">
-    <h1>Client Companies</h1>
-    <a href="${pageContext.request.contextPath}/">Home</a>
-    <a href="Logout">Logout</a>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="${pageContext.request.contextPath}/">Supreme Logics Co</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="Companies">Companies</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Regions">Regions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Products">Products</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="Logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 </div>
 
 <div class="container">
