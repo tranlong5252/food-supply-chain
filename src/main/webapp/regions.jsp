@@ -60,6 +60,127 @@
                 </button>
             </div>
         </form>
+        <form action="Regions" id ="filterRegions"></form>
+        <div class="card">
+            <p class="card-header">Filter</p>
+            <div class="card-group">
+                <div class="card">
+                    <p class="card-text">Population</p>
+                    <div class="card-group">
+                        <div class="card">
+                            <p class="card-text">Distribution</p>
+                            <label>
+                                <input type="number" name="regionPopDisMin" placeholder="From" min="0" form="filterRegions"
+                                <c:if test="${requestScope.regionPopDisMin != null}">
+                                       value="${requestScope.regionPopDisMin}"
+                                </c:if>
+                                >
+                            </label>
+                            <label>
+                                <input type="number" name="regionPopDisMax" placeholder="To" min="0" form="filterRegions"
+                                <c:if test="${requestScope.regionPopDisMax != null}">
+                                       value="${requestScope.regionPopDisMax}"
+                                </c:if>
+                                >
+                            </label>
+                        </div>
+                        <div class="card">
+                            <p class="card-text">Migration</p>
+                            <label>
+                                <input type="number" name="regionPopMigMin" placeholder="From" min="0" max="10" form="filterRegions"
+                                <c:if test="${requestScope.regionPopMigMin != null}">
+                                       value="${requestScope.regionPopMigMin}"
+                                </c:if>
+                                >
+                            </label>
+                            <label>
+                                <input type="number" name="regionPopMigMax" placeholder="To" min="0" max="10" form="filterRegions"
+                                <c:if test="${requestScope.regionPopMigMax != null}">
+                                       value="${requestScope.regionPopMigMax}"
+                                </c:if>
+                                >
+                            </label>
+                        </div>
+                        <div class="card">
+                            <p class="card-text">Urbanization</p>
+                            <label>
+                                <input type="number" name="regionPopUrbMin" placeholder="From" min="0" max="10" form="filterRegions"
+                                <c:if test="${requestScope.regionPopUrbMin != null}">
+                                       value="${requestScope.regionPopUrbMin}"
+                                </c:if>
+                                >
+                            </label>
+                            <label>
+                                <input type="number" name="regionPopUrbMax" placeholder="To" min="0" max="10" form="filterRegions"
+                                <c:if test="${requestScope.regionPopUrbMax != null}">
+                                       value="${requestScope.regionPopUrbMax}"
+                                </c:if>
+                                >
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <p class="card-text">Nature status</p>
+                    <div class="card-group">
+                        <div class="card">
+                            <p class="card-text">agricultureLand</p>
+                            <label>
+                                <input type="number" name="regionNatAgriMin" placeholder="From" form="filterRegions"
+                                <c:if test="${requestScope.regionNatAgriMin != null}">
+                                       value="${requestScope.regionNatAgriMin}"
+                                </c:if>
+                                >
+                            </label>
+                            <label>
+                                <input type="number" name="regionNatAgriMax" placeholder="To" form="filterRegions"
+                                <c:if test="${requestScope.regionNatAgriMax != null}">
+                                       value="${requestScope.regionNatAgriMax}"
+                                </c:if>
+                                >
+                            </label>
+                        </div>
+                        <div class="card">
+                            <p class="card-text">forestLand</p>
+                            <label>
+                                <input type="number" name="regionNatForMin" placeholder="From" form="filterRegions"
+                                <c:if test="${requestScope.regionNatForMin != null}">
+                                       value="${requestScope.regionNatForMin}"
+                                </c:if>
+                                >
+                            </label>
+                            <label>
+                                <input type="number" name="regionNatForMax" placeholder="To" form="filterRegions"
+                                <c:if test="${requestScope.regionNatForMax != null}">
+                                       value="${requestScope.regionNatForMax}"
+                                </c:if>
+                                >
+                            </label>
+                        </div>
+                        <div class="card">
+                            <p class="card-text">disaster</p>
+                            <label>
+                                <input type="text" name="regionNatDis" placeholder="From" form="filterRegions"
+                                <c:if test="${requestScope.regionNatDis != null}">
+                                       value="${requestScope.regionNatDis}"
+                                </c:if>
+                                >
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-sm btn-secondary" name="action" value="filterRegions" form="filterRegions">
+                    Filter
+                </button>
+                <button type="submit" class="btn btn-sm btn-warning" name="action" value="resetRegions" form="resetRegions">
+                    Reset
+                </button>
+                <form action="Regions" id="resetRegions"></form>
+            </div>
+        </div>
+
     </div>
     <div class="row">
         <div class="col">
@@ -67,120 +188,120 @@
                 <table class="table table-sm table-primary table-striped table-hover caption-top table-bordered">
                     <caption>List of users</caption>
                     <thead class="table-light">
-                <tr>
-                    <th rowspan="2" scope="col">ID</th>
-                    <th rowspan="2" scope="col">Name</th>
-                    <%--                    <th rowspan="2">Industrial and Agricultural status</th>--%>
-                    <th colspan="3" scope="col">Population</th>
-                    <th colspan="3" scope="col">Nature status</th>
-                    <th rowspan="2" scope="col">Action</th>
-                </tr>
-                <tr>
-                    <th scope="col">distribution</th>
-                    <th scope="col">migration</th>
-                    <th scope="col">urbanization</th>
-                    <th scope="col">agricultureLand</th>
-                    <th scope="col">forestLand</th>
-                    <th scope="col">disaster</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:if test="${requestScope.regions != null}">
-                    <c:forEach items="${requestScope.regions}" var="region">
-                        <tr onclick="selectRegion(${region.id})">
-                            <td>
-                                <label class="col-form-label">
-                                        ${region.id}
-                                </label>
-                                <form action="Regions" id="selectRegion_${region.id}">
-                                    <input type="hidden" name="action" value="selectRegion">
-                                    <input type="hidden" name="regionId" value="${region.id}">
+                    <tr>
+                        <th rowspan="2" scope="col">ID</th>
+                        <th rowspan="2" scope="col">Name</th>
+                        <%--                    <th rowspan="2">Industrial and Agricultural status</th>--%>
+                        <th colspan="3" scope="col">Population</th>
+                        <th colspan="3" scope="col">Nature status</th>
+                        <th rowspan="2" scope="col">Action</th>
+                    </tr>
+                    <tr>
+                        <th scope="col">distribution</th>
+                        <th scope="col">migration</th>
+                        <th scope="col">urbanization</th>
+                        <th scope="col">agricultureLand</th>
+                        <th scope="col">forestLand</th>
+                        <th scope="col">disaster</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:if test="${requestScope.regions != null}">
+                        <c:forEach items="${requestScope.regions}" var="region">
+                            <tr onclick="selectRegion(${region.id})">
+                                <td>
+                                    <label class="col-form-label">
+                                            ${region.id}
+                                    </label>
+                                    <form action="Regions" id="selectRegion_${region.id}">
+                                        <input type="hidden" name="action" value="selectRegion">
+                                        <input type="hidden" name="regionId" value="${region.id}">
+                                    </form>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input class="form-control-plaintext" type="text" name="regionName"
+                                               value="${region.name}"
+                                               form="editRegion_${region.id}" required>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input class="form-control-plaintext" type="number" name="regionPopDis"
+                                               value="${region.population.distribution}"
+                                               step="any"
+                                               form="editRegion_${region.id}" required>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input class="form-control-plaintext" type="number" name="regionPopMig"
+                                               value="${region.population.migration}"
+                                               step="1"
+                                               min="0" max="10"
+                                               form="editRegion_${region.id}" required>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input class="form-control-plaintext" type="number" name="regionPopUrb"
+                                               value="${region.population.urbanization}"
+                                               step="1"
+                                               min="0" max="10"
+                                               form="editRegion_${region.id}" required>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input class="form-control-plaintext" type="number" name="regionNatAgri"
+                                               step="any"
+                                               min="0" max="100"
+                                               value="${region.natureStatus.agricultureLand}"
+                                               form="editRegion_${region.id}" required>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input class="form-control-plaintext" type="number" name="regionNatFor"
+                                               value="${region.natureStatus.forestLand}"
+                                               step="any"
+                                               min="0" max="100"
+                                               form="editRegion_${region.id}" required>
+                                    </label>
+                                </td>
+                                <td>
+                                    <label>
+                                        <input class="form-control-plaintext" type="text" name="regionNatDis"
+                                               value="${region.natureStatus.disaster}"
+                                               form="editRegion_${region.id}" required>
+                                    </label>
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        <button type="submit" class="btn btn-secondary" name="action"
+                                                form="editRegion_${region.id}"
+                                                value="editRegion">Edit
+                                        </button>
+                                        <button type="submit" class="btn btn-danger" name="action"
+                                                form="deleteRegion_${region.id}"
+                                                value="deleteRegion">Delete
+                                        </button>
+                                    </div>
+                                </td>
+                                <form action="Region" id="editRegion_${region.id}">
+                                    <div class="input-group">
+                                        <input type="hidden" name="regionId" value="${region.id}">
+                                    </div>
                                 </form>
-                            </td>
-                            <td>
-                                <label>
-                                    <input class="form-control-plaintext" type="text" name="regionName"
-                                           value="${region.name}"
-                                           form="editRegion_${region.id}" required>
-                                </label>
-                            </td>
-                            <td>
-                                <label>
-                                    <input class="form-control-plaintext" type="number" name="regionPopDis"
-                                           value="${region.population.distribution}"
-                                           step="any"
-                                           form="editRegion_${region.id}" required>
-                                </label>
-                            </td>
-                            <td>
-                                <label>
-                                    <input class="form-control-plaintext" type="number" name="regionPopMig"
-                                           value="${region.population.migration}"
-                                           step="1"
-                                           min="0" max="10"
-                                           form="editRegion_${region.id}" required>
-                                </label>
-                            </td>
-                            <td>
-                                <label>
-                                    <input class="form-control-plaintext" type="number" name="regionPopUrb"
-                                           value="${region.population.urbanization}"
-                                           step="1"
-                                           min="0" max="10"
-                                           form="editRegion_${region.id}" required>
-                                </label>
-                            </td>
-                            <td>
-                                <label>
-                                    <input class="form-control-plaintext" type="number" name="regionNatAgri"
-                                           step="any"
-                                           min="0" max="100"
-                                           value="${region.natureStatus.agricultureLand}"
-                                           form="editRegion_${region.id}" required>
-                                </label>
-                            </td>
-                            <td>
-                                <label>
-                                    <input class="form-control-plaintext" type="number" name="regionNatFor"
-                                           value="${region.natureStatus.forestLand}"
-                                           step="any"
-                                           min="0" max="100"
-                                           form="editRegion_${region.id}" required>
-                                </label>
-                            </td>
-                            <td>
-                                <label>
-                                    <input class="form-control-plaintext" type="text" name="regionNatDis"
-                                           value="${region.natureStatus.disaster}"
-                                           form="editRegion_${region.id}" required>
-                                </label>
-                            </td>
-                            <td>
-                                <div class="btn-group btn-group-sm" role="group">
-                                    <button type="submit" class="btn btn-secondary" name="action"
-                                            form="editRegion_${region.id}"
-                                            value="editRegion">Edit
-                                    </button>
-                                    <button type="submit" class="btn btn-danger" name="action"
-                                            form="deleteRegion_${region.id}"
-                                            value="deleteRegion">Delete
-                                    </button>
-                                </div>
-                            </td>
-                            <form action="Region" id="editRegion_${region.id}">
-                                <div class="input-group">
-                                    <input type="hidden" name="regionId" value="${region.id}">
-                                </div>
-                            </form>
-                            <form action="Region" id="deleteRegion_${region.id}">
-                                <div class="input-group">
-                                    <input type="hidden" name="regionId" value="${region.id}">
-                                </div>
-                            </form>
-                        </tr>
-                    </c:forEach>
-                </c:if>
-                </tbody>
+                                <form action="Region" id="deleteRegion_${region.id}">
+                                    <div class="input-group">
+                                        <input type="hidden" name="regionId" value="${region.id}">
+                                    </div>
+                                </form>
+                            </tr>
+                        </c:forEach>
+                    </c:if>
+                    </tbody>
                     <tfoot class="table-light">
                     <tr>
                         <td></td>
@@ -310,7 +431,7 @@
                                         name="action"
                                         form="deleteRegionStatus"
                                         value="deleteRegionStatus">Delete
-                                        </button>
+                                </button>
 
                             </td>
                         </tr>
