@@ -7,9 +7,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public abstract class DatabaseConnection {
-    protected Connection connection;
-
     private static DatabaseConnection instance;
+    protected Connection connection;
 
     public static DatabaseConnection getInstance() {
         return instance;
@@ -17,7 +16,7 @@ public abstract class DatabaseConnection {
 
     public static void init(String dbType) {
         switch (dbType) {
-            case "mysql" -> {
+            case "mysql":
                 var host = "172.25.127.215";
                 var port = 3306;
                 var database = "food_supply_chain";
@@ -26,14 +25,12 @@ public abstract class DatabaseConnection {
                 if (dbType.equals("mysql")) {
                     instance = new MySqlDBC(host, port, database, user, password);
                 }
-            }
-            case "mssql" -> {
-                throw new UnsupportedOperationException("mssql is not supported yet");
-            }
-            default -> {
+                break;
+            case "mongodb":
+                throw new UnsupportedOperationException("mongodb is not supported yet");
+            default:
                 throw new UnsupportedOperationException("invalid database type");
-            }
-        };
+        }
     }
 
     public static void unload() {

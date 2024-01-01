@@ -14,11 +14,11 @@ public class MySqlDBC extends DatabaseConnection {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, user, password);
             Logger.info("Connected to the database (MySQL)");
-        } catch (Exception ex){
+        } catch (Exception ex) {
             Logger.severe(ex, "Could not connect to the database");
         }
     }
-        
+
     public String getTypeName() {
         return "mysql";
     }

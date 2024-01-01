@@ -47,18 +47,18 @@ public class RegionDaoImpl implements RegionDao {
         var list = fetchRecords(
                 statement("SELECT * FROM region_status INNER JOIN status ON region_status.status_id = status.id WHERE region_status.region_id = ?"
                         , statement -> {
-                    statement.setInt(1, id);
-                    return statement;
-                }), resultSet -> {
-                        IndustrialAgriculturalStatus status = new IndustrialAgriculturalStatus();
-                        status.setId(resultSet.getInt("id"));
-                        status.setName(resultSet.getString("name"));
-                        status.setLevel(StatusLevel.getByValue(resultSet.getInt("level")));
-                        status.setValue(resultSet.getDouble("value"));
-                        status.setPotential(resultSet.getInt("potential"));
-                        status.setDevelopment(resultSet.getInt("development"));
-                        return status;
-                    });
+                            statement.setInt(1, id);
+                            return statement;
+                        }), resultSet -> {
+                    IndustrialAgriculturalStatus status = new IndustrialAgriculturalStatus();
+                    status.setId(resultSet.getInt("id"));
+                    status.setName(resultSet.getString("name"));
+                    status.setLevel(StatusLevel.getByValue(resultSet.getInt("level")));
+                    status.setValue(resultSet.getDouble("value"));
+                    status.setPotential(resultSet.getInt("potential"));
+                    status.setDevelopment(resultSet.getInt("development"));
+                    return status;
+                });
         return new StatusList(list);
     }
 
@@ -138,7 +138,7 @@ public class RegionDaoImpl implements RegionDao {
 
     @Override
     public List<Region> search(String name) {
-        return statement("SELECT * FROM region WHERE name LIKE CONCAT( '%',?,'%')" , statement -> {
+        return statement("SELECT * FROM region WHERE name LIKE CONCAT( '%',?,'%')", statement -> {
             statement.setString(1, name);
             List<Region> region = fetchRecords(statement, resultSet -> {
                 Population population = new Population();

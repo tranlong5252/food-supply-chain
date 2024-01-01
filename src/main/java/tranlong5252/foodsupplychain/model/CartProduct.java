@@ -2,9 +2,15 @@ package tranlong5252.foodsupplychain.model;
 
 public class CartProduct {
     private int id;
-    private Product product;
+    private final Product product;
     private int quantity;
     private double subtotal;
+
+    public CartProduct(Product product, int quantity) {
+        this.product = product;
+        this.quantity = quantity;
+        this.subtotal = product.getPrice() * quantity;
+    }
 
     public int getId() {
         return id;
@@ -29,11 +35,5 @@ public class CartProduct {
 
     public double getSubtotal() {
         return subtotal;
-    }
-
-    public CartProduct(Product product, int quantity) {
-        this.product = product;
-        this.quantity = quantity;
-        this.subtotal = product.getPrice() * quantity;
     }
 }

@@ -5,6 +5,10 @@ import java.util.ArrayList;
 public class Cart extends ArrayList<CartProduct> {
     private double total;
 
+    public Cart() {
+        total = 0;
+    }
+
     public double getTotal() {
         return total;
     }
@@ -27,10 +31,6 @@ public class Cart extends ArrayList<CartProduct> {
     public CartProduct remove(int index) {
         total -= this.get(index).getSubtotal();
         return super.remove(index);
-    }
-
-    public Cart() {
-        total = 0;
     }
 
 
