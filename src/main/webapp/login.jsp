@@ -17,23 +17,31 @@
     <div class="row">
         <div class="col-4"></div>
         <div class="col">
-            <h1>Login</h1>
-            <c:if test="${requestScope.error != null}">
-                <p>${requestScope.error}</p>
-            </c:if>
-            <form method="POST">
-                <div class="mb-3">
-                    <label class="form-label" for="username">Username</label>
-                    <input class="form-control" type="text" id="username" name="username">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Login</h3>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label" for="password">Password</label>
-                    <input class="form-control" type="password" id="password" name="password">
+                <c:if test="${requestScope.error != null}">
+                    <p class="text-bg-danger text-center">${requestScope.error}</p>
+                </c:if>
+                <div class="card-body">
+
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label class="form-label" for="username">Username</label>
+                            <input class="form-control" type="text" id="username" name="username">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="password">Password</label>
+                            <input class="form-control" type="password" id="password" name="password">
+                        </div>
+                        <div class="d-grid">
+                            <button class="btn btn-primary" type="submit">Login</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="d-grid">
-                    <button class="btn btn-primary" type="submit">Login</button>
-                </div>
-            </form>
+                <div class="card-footer"></div>
+            </div>
         </div>
         <div class="col-4"></div>
     </div>

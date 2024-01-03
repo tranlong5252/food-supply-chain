@@ -1,5 +1,6 @@
 package tranlong5252.foodsupplychain.database.dao.impl.mysql;
 
+import tranlong5252.foodsupplychain.database.dao.AccountDao;
 import tranlong5252.foodsupplychain.database.dao.ClientCompanyDao;
 import tranlong5252.foodsupplychain.database.dao.RegionDao;
 import tranlong5252.foodsupplychain.model.ClientCompany;
@@ -9,13 +10,14 @@ import java.util.List;
 
 public class ClientCompanyDaoImpl implements ClientCompanyDao {
 
-    private ClientCompany newCompany(int id, String name, String taxCode, String specification, int regionId) {
+    private ClientCompany newCompany(int id, String name, String taxCode, String specification, int regionId, int accountId) {
         ClientCompany company = new ClientCompany();
         company.setId(id);
         company.setName(name);
         company.setTaxCode(taxCode);
         company.setSpecification(specification);
         company.setRegion(RegionDao.getInstance().get(regionId));
+        company.setAccount(AccountDao.getInstance().get(accountId));
 
         return company;
     }
@@ -28,23 +30,10 @@ public class ClientCompanyDaoImpl implements ClientCompanyDao {
                         resultSet.getString("name"),
                         resultSet.getString("tax_code"),
                         resultSet.getString("specification"),
-                        resultSet.getInt("region_id")
+                        resultSet.getInt("region_id"),
+                        resultSet.getInt("account_id")
                 ))
         );
-    }
-
-    @Override
-    public int add(ClientCompany obj) {
-        return statementWithKey("INSERT INTO client_company (name, tax_code, region_id, specification) VALUES (?, ?, ?, ?)", statement -> {
-            statement.setString(1, obj.getName());
-            statement.setString(2, obj.getTaxCode());
-            statement.setInt(3, obj.getRegion().getId());
-            statement.setString(4, obj.getSpecification());
-            statement.executeUpdate();
-            ResultSet generatedKeysResultSet = statement.getGeneratedKeys();
-            generatedKeysResultSet.next();
-            return generatedKeysResultSet.getInt(1);
-        });
     }
 
     @Override
@@ -56,21 +45,35 @@ public class ClientCompanyDaoImpl implements ClientCompanyDao {
                     resultSet.getString("name"),
                     resultSet.getString("tax_code"),
                     resultSet.getString("specification"),
-                    resultSet.getInt("region_id")
+                    resultSet.getInt("region_id"),
+                    resultSet.getInt("account_id")
             ));
         });
     }
 
     @Override
-    public void update(ClientCompany company) {
-        statement("UPDATE client_company SET name = ?, tax_code = ?, specification = ?, region_id = ? WHERE id = ?", statement -> {
+    public int update(ClientCompany company) {
+        if (company.getId() != 0) {
+            statement("UPDATE client_company SET name = ?, tax_code = ?, specification = ?, region_id = ?, account_id = ? WHERE id = ?", statement -> {
+                statement.setString(1, company.getName());
+                statement.setString(2, company.getTaxCode());
+                statement.setString(3, company.getSpecification());
+                statement.setInt(4, company.getRegion().getId());
+                statement.setInt(5, company.getAccount().getId());
+                statement.setInt(6, company.getId());
+                return statement.executeUpdate();
+            });
+            return company.getId();
+        }
+        return statementWithKey("INSERT INTO client_company (name, tax_code, region_id, specification) VALUES (?, ?, ?, ?)", statement -> {
             statement.setString(1, company.getName());
             statement.setString(2, company.getTaxCode());
-            statement.setString(3, company.getSpecification());
-            statement.setInt(4, company.getRegion().getId());
-            statement.setInt(5, company.getId());
+            statement.setInt(3, company.getRegion().getId());
+            statement.setString(4, company.getSpecification());
             statement.executeUpdate();
-            return null;
+            ResultSet generatedKeysResultSet = statement.getGeneratedKeys();
+            generatedKeysResultSet.next();
+            return generatedKeysResultSet.getInt(1);
         });
     }
 
@@ -81,6 +84,7 @@ public class ClientCompanyDaoImpl implements ClientCompanyDao {
             statement.executeUpdate();
             return null;
         });
+        AccountDao.getInstance().delete(company.getAccount());
     }
 
     @Override
@@ -93,7 +97,8 @@ public class ClientCompanyDaoImpl implements ClientCompanyDao {
                     resultSet.getString("name"),
                     resultSet.getString("tax_code"),
                     resultSet.getString("specification"),
-                    resultSet.getInt("region_id")
+                    resultSet.getInt("region_id"),
+                    resultSet.getInt("account_id")
             ));
         });
     }

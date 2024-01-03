@@ -1,7 +1,9 @@
 package tranlong5252.foodsupplychain.controllers;
 
+import tranlong5252.foodsupplychain.database.dao.AccountDao;
 import tranlong5252.foodsupplychain.database.dao.ClientCompanyDao;
 import tranlong5252.foodsupplychain.database.dao.RegionDao;
+import tranlong5252.foodsupplychain.model.Account;
 import tranlong5252.foodsupplychain.model.ClientCompany;
 import tranlong5252.foodsupplychain.model.Region;
 
@@ -38,7 +40,24 @@ public class CompanyController extends HttpServlet {
             company.setRegion(region);
             company.setSpecification(specification);
 
-            ClientCompanyDao.getInstance().add(company);
+            int id = ClientCompanyDao.getInstance().update(company);
+            company.setId(id);
+
+            String accountName = name.split(" ")[0].toLowerCase();
+            for (int i = 1; i < name.split(" ").length; i++) {
+                accountName = accountName.concat(name.split(" ")[i].substring(0, 1).toUpperCase());
+            }
+
+            Account account = new Account();
+
+            account.setUsername(accountName.concat("_" + id));
+            account.setPassword("123@@123");
+            int accountId = AccountDao.getInstance().update(account);
+            account.setId(accountId);
+
+            company.setAccount(account);
+            ClientCompanyDao.getInstance().update(company);
+
             //session.setAttribute("companies", companies);
         } catch (Exception e) {
             req.setAttribute("error", e.getMessage());

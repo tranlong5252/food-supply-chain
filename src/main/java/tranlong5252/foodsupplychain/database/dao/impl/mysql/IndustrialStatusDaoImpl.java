@@ -61,7 +61,19 @@ public class IndustrialStatusDaoImpl implements IndustrialStatusDao {
     }
 
     @Override
-    public int add(IndustrialAgriculturalStatus obj) {
+    public int update(IndustrialAgriculturalStatus obj) {
+        if (obj.getId() != 0) {
+            statement("UPDATE status SET name = ?, level = ?, value = ?, potential = ?, development = ? WHERE id = ?", statement -> {
+                statement.setString(1, obj.getName());
+                statement.setInt(2, obj.getLevel().getValue());
+                statement.setDouble(3, obj.getValue());
+                statement.setInt(4, obj.getPotential());
+                statement.setInt(5, obj.getDevelopment());
+                statement.setInt(6, obj.getId());
+                return statement.executeUpdate();
+            });
+            return obj.getId();
+        }
         return statementWithKey("INSERT INTO status (name, level, value, potential, development) VALUES (?, ?, ?, ?, ?)", statement -> {
             statement.setString(1, obj.getName());
             statement.setInt(2, obj.getLevel().getValue());
@@ -72,20 +84,6 @@ public class IndustrialStatusDaoImpl implements IndustrialStatusDao {
             ResultSet generatedKeysResultSet = statement.getGeneratedKeys();
             generatedKeysResultSet.next();
             return generatedKeysResultSet.getInt(1);
-        });
-    }
-
-    @Override
-    public void update(IndustrialAgriculturalStatus obj) {
-        statement("UPDATE status SET name = ?, level = ?, value = ?, potential = ?, development = ? WHERE id = ?", statement -> {
-            statement.setString(1, obj.getName());
-            statement.setInt(2, obj.getLevel().getValue());
-            statement.setDouble(3, obj.getValue());
-            statement.setInt(4, obj.getPotential());
-            statement.setInt(5, obj.getDevelopment());
-            statement.setInt(6, obj.getId());
-            statement.executeUpdate();
-            return null;
         });
     }
 

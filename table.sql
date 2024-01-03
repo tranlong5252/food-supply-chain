@@ -54,3 +54,11 @@ CREATE TABLE IF NOT EXISTS `client_company` (
                                       PRIMARY KEY (`id`),
                                       FOREIGN KEY `region_id` (`region_id`) REFERENCES `region` (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- int id is key, String username, String password
+CREATE TABLE IF NOT EXISTS `account` (
+                                      `id` int(11) NOT NULL AUTO_INCREMENT,
+                                      `username` varchar(255) NOT NULL,
+                                      `password` varchar(255) NOT NULL,
+                                      PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

@@ -63,23 +63,6 @@ public class RegionDaoImpl implements RegionDao {
     }
 
     @Override
-    public int add(Region obj) {
-        return statementWithKey("INSERT INTO region (name, distribution, migration, urbanization, agriculture_land, forest_land, disaster) VALUES (?, ?, ?, ?, ?, ?, ?)", statement -> {
-            statement.setString(1, obj.getName());
-            statement.setDouble(2, obj.getPopulation().getDistribution());
-            statement.setInt(3, obj.getPopulation().getMigration());
-            statement.setInt(4, obj.getPopulation().getUrbanization());
-            statement.setDouble(5, obj.getNatureStatus().getAgricultureLand());
-            statement.setDouble(6, obj.getNatureStatus().getForestLand());
-            statement.setString(7, obj.getNatureStatus().getDisaster());
-            statement.executeUpdate();
-            ResultSet generatedKeysResultSet = statement.getGeneratedKeys();
-            generatedKeysResultSet.next();
-            return generatedKeysResultSet.getInt(1);
-        });
-    }
-
-    @Override
     public Region get(int id) {
         Region region = statement("SELECT * FROM region WHERE id = ?", statement -> {
             statement.setInt(1, id);
@@ -103,8 +86,31 @@ public class RegionDaoImpl implements RegionDao {
     }
 
     @Override
-    public void update(Region obj) {
-        statement("UPDATE region SET name = ?, distribution = ?, migration = ?, urbanization = ?, agriculture_land = ?, forest_land = ?, disaster = ? WHERE id = ?", statement -> {
+    public int update(Region obj) {
+        if (obj.getId() != 0) {
+            statement("UPDATE region SET name = ?, distribution = ?, migration = ?, urbanization = ?, agriculture_land = ?, forest_land = ?, disaster = ? WHERE id = ?", statement -> {
+                statement.setString(1, obj.getName());
+                statement.setDouble(2, obj.getPopulation().getDistribution());
+                statement.setInt(3, obj.getPopulation().getMigration());
+                statement.setInt(4, obj.getPopulation().getUrbanization());
+                statement.setDouble(5, obj.getNatureStatus().getAgricultureLand());
+                statement.setDouble(6, obj.getNatureStatus().getForestLand());
+                statement.setString(7, obj.getNatureStatus().getDisaster());
+                statement.setInt(8, obj.getId());
+                return statement.executeUpdate();
+            });
+            for (int i = 0; i < obj.getStatuses().size(); i++) {
+                int finalI = i;
+                statement("INSERT INTO region_status (region_id, status_id) VALUES (?, ?) ON DUPLICATE KEY UPDATE region_id = region_id", statement -> {
+                    statement.setInt(1, obj.getId());
+                    statement.setInt(2, obj.getStatuses().get(finalI).getId());
+                    statement.executeUpdate();
+                    return null;
+                });
+            }
+            return obj.getId();
+        }
+        return statementWithKey("INSERT INTO region (name, distribution, migration, urbanization, agriculture_land, forest_land, disaster) VALUES (?, ?, ?, ?, ?, ?, ?)", statement -> {
             statement.setString(1, obj.getName());
             statement.setDouble(2, obj.getPopulation().getDistribution());
             statement.setInt(3, obj.getPopulation().getMigration());
@@ -112,19 +118,11 @@ public class RegionDaoImpl implements RegionDao {
             statement.setDouble(5, obj.getNatureStatus().getAgricultureLand());
             statement.setDouble(6, obj.getNatureStatus().getForestLand());
             statement.setString(7, obj.getNatureStatus().getDisaster());
-            statement.setInt(8, obj.getId());
             statement.executeUpdate();
-            return null;
+            ResultSet generatedKeysResultSet = statement.getGeneratedKeys();
+            generatedKeysResultSet.next();
+            return generatedKeysResultSet.getInt(1);
         });
-        for (int i = 0; i < obj.getStatuses().size(); i++) {
-            int finalI = i;
-            statement("INSERT INTO region_status (region_id, status_id) VALUES (?, ?) ON DUPLICATE KEY UPDATE region_id = region_id", statement -> {
-                statement.setInt(1, obj.getId());
-                statement.setInt(2, obj.getStatuses().get(finalI).getId());
-                statement.executeUpdate();
-                return null;
-            });
-        }
     }
 
     @Override

@@ -49,7 +49,7 @@ public class RegionController extends HttpServlet {
             region.setPopulation(population);
             region.setNatureStatus(natureStatus);
 
-            RegionDao.getInstance().add(region);
+            RegionDao.getInstance().update(region);
             //session.setAttribute("regions", regions);
         } catch (Exception e) {
             req.setAttribute("error", e.getMessage());
@@ -149,7 +149,7 @@ public class RegionController extends HttpServlet {
 
             int development = Integer.parseInt(req.getParameter("statusDevelopment"));
             status.setDevelopment(development);
-            int id = IndustrialStatusDao.getInstance().add(status);
+            int id = IndustrialStatusDao.getInstance().update(status);
             status.setId(id);
             region.getStatuses().add(status);
             RegionDao.getInstance().update(region);

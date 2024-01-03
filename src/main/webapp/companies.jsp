@@ -37,7 +37,7 @@
                 </ul>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="Logout">Logout</a>
+                        <a class="nav-link link-danger" href="Logout">Logout</a>
                     </li>
                 </ul>
             </div>
@@ -74,6 +74,7 @@
                     <th scope="col">Tax code</th>
                     <th scope="col">Region</th>
                     <th scope="col">Industry/Agriculture</th>
+                    <th scope="col">Username</th>
                     <th scope="col">Action</th>
                 </tr>
                 </thead>
@@ -118,6 +119,12 @@
                                 </label>
                             </td>
                             <td>
+                                <label>
+                                    <input class="form-control-plaintext" type="text" name="companyUsername"
+                                           disabled
+                                           value="${company.account.username}">
+                                </label>
+                            <td>
                                 <div class="btn-group btn-group-sm" role="group">
                                     <button type="submit" class="btn btn-secondary" name="action"
                                             form="edit"
@@ -137,7 +144,6 @@
                                 <form action="Company" id="remove">
                                     <input type="hidden" name="companyId" value="${company.id}">
                                     <div class="input-group">
-
                                     </div>
                                 </form>
                             </td>
@@ -172,6 +178,8 @@
                         <label>
                             <input class="form-control-plaintext" type="text" name="companySpecification" form="add" placeholder="Type">
                         </label>
+                    </td>
+                    <td></td>
                     <td>
                         <button type="submit" class="btn btn-sm btn-success" name="action" value="addCompany"
                                 form="add">

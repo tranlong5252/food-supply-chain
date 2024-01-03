@@ -1,11 +1,10 @@
 package tranlong5252.foodsupplychain.utils;
 
+import tranlong5252.foodsupplychain.database.dao.AccountDao;
 import tranlong5252.foodsupplychain.model.Account;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-
-import static tranlong5252.foodsupplychain.database.dao.AccountDao.getById;
 
 public class Util {
     public static Account getAccount(HttpServletRequest req) {
@@ -17,7 +16,7 @@ public class Util {
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals("accountId")) {
                 int id = Integer.parseInt(cookie.getValue());
-                account = getById(id);
+                account = AccountDao.getInstance().get(id);
                 break;
             }
         }

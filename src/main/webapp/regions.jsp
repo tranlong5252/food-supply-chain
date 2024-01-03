@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="tranlong5252.foodsupplychain.constants.StatusLevel" %>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Supreme Logics Co</title>
@@ -35,7 +36,7 @@
                 </ul>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="Logout">Logout</a>
+                        <a class="nav-link link-danger" href="Logout">Logout</a>
                     </li>
                 </ul>
             </div>

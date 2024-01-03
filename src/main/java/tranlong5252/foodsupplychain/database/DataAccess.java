@@ -143,9 +143,7 @@ public interface DataAccess<K> {
 
     List<K> getList();
 
-    int add(K obj);
-
-    void update(K obj);
+    int update(K obj);
 
     void delete(K obj);
 }

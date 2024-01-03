@@ -8,6 +8,7 @@ public class ClientCompany {
     private String taxCode;
     private Region region;
     private String specification;
+    private Account account;
 
     public int getId() {
         return id;
@@ -47,5 +48,13 @@ public class ClientCompany {
 
     public void setSpecification(String specification) {
         this.specification = specification;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 }
