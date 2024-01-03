@@ -51,16 +51,18 @@
 
     <h1>Regions management</h1>
     <div class="find-object">
-        <form action="Regions" id="searchRegions">
+        <form action="Regions" id="searchRegions"></form>
             <div class="input-group">
                 <label>
-                    <input type="text" name="regionName" placeholder="Find by name">
+                    <input type="text" name="regionName" placeholder="Find by name" form="searchRegions">
                 </label>
-                <button type="submit" class="btn btn-sm btn-secondary" name="action" value="searchRegions">
+                <button type="submit" class="btn btn-sm btn-secondary" name="action" value="searchRegions" form="searchRegions">
                     Search
                 </button>
+                <button type="submit" class="btn btn-sm btn-outline-secondary" form="resetRegions" name="action" value="resetRegions">
+                    Reset
+                </button>
             </div>
-        </form>
         <form action="Regions" id ="filterRegions"></form>
         <div class="card">
             <p class="card-header">Filter</p>
@@ -187,7 +189,29 @@
         <div class="col">
             <div class="table-responsive">
                 <table class="table table-sm table-primary table-striped table-hover caption-top table-bordered">
-                    <caption>List of users</caption>
+                    <caption>
+                        <c:if test="${requestScope.page != null}">
+                            <c:forEach var="i" begin="1" end="${requestScope.maxPage}" step="1">
+                                <%--                            append current parameters--%>
+                                <c:url value="Regions" var="url">
+                                    <c:param name="page" value="${i}"/>
+                                    <c:if test="${param.regionName != null}">
+                                        <c:param name="regionName" value="${param.regionName}"/>
+                                    </c:if>
+                                    <c:if test="${param.action != null}">
+                                        <c:param name="action" value="${param.action}"/>
+                                    </c:if>
+                                </c:url>
+                                <%--                            action--%>
+                                <c:if test="${requestScope.page == i}">
+                                    <a href="${url}" class="btn btn-sm btn-secondary">${i}</a>
+                                </c:if>
+                                <c:if test="${requestScope.page != i}">
+                                    <a href="${url}" class="btn btn-sm btn-outline-secondary">${i}</a>
+                                </c:if>
+                            </c:forEach>
+                        </c:if>
+                    </caption>
                     <thead class="table-light">
                     <tr>
                         <th rowspan="2" scope="col">ID</th>

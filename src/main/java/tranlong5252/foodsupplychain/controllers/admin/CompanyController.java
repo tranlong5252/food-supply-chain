@@ -99,20 +99,23 @@ public class CompanyController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
-        if ("addCompany".equals(action)) {
-            addClientCompany(req, resp);
-        } else if ("editCompany".equals(action)) {
-            editClientCompany(req, resp);
-        } else if ("deleteCompany".equals(action)) {
-            deleteClientCompany(req, resp);
-        } else if ("searchCompany".equals(action)) {
-            String name = req.getParameter("companyName");
-            int page = 1;
-            try {
-                page = Integer.parseInt(req.getParameter("page"));
-            } catch (Exception e) {
+        switch (action) {
+            case "addCompany" -> addClientCompany(req, resp);
+            case "editCompany" -> editClientCompany(req, resp);
+            case "deleteCompany" -> deleteClientCompany(req, resp);
+            case "reset" -> {
+                req.getSession().removeAttribute("company");
+                resp.sendRedirect("Companies");
             }
-            req.setAttribute("companies", ClientCompanyDao.getInstance().search(name, page));
+            case "searchCompany" -> {
+                String name = req.getParameter("companyName");
+                int page = 1;
+                try {
+                    page = Integer.parseInt(req.getParameter("page"));
+                } catch (Exception e) {
+                }
+                req.setAttribute("companies", ClientCompanyDao.getInstance().search(name, page));
+            }
         }
         if (req.getAttribute("error") != null) {
             req.getRequestDispatcher("Companies").forward(req, resp);

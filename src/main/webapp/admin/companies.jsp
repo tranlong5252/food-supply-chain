@@ -53,16 +53,19 @@
         <div class="col">
             <h2>Client companies management</h2>
             <div class="find-object">
-                <form action="Companies" id="searchCompanies">
+                <form action="Companies" id="searchCompanies"></form>
+                <form action="Companies" id="reset"></form>
                     <div class="input-group">
                         <label>
-                            <input type="text" name="companyName" placeholder="Find by name">
+                            <input type="text" name="companyName" placeholder="Find by name" form="searchCompanies">
                         </label>
-                        <button type="submit" class="btn btn-sm btn-secondary" name="action" value="searchCompanies">
+                        <button type="submit" class="btn btn-sm btn-secondary" name="action" value="searchCompanies" form="searchCompanies">
                             Search
                         </button>
+                        <button type="submit" class="btn btn-sm btn-outline-secondary" form="reset">
+                            Reset
+                        </button>
                     </div>
-                </form>
             </div>
             <div class="table-responsive">
                 <table class="table table-sm table-primary table-striped table-hover caption-top table-bordered">
