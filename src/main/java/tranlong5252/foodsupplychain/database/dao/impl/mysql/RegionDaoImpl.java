@@ -43,6 +43,33 @@ public class RegionDaoImpl implements RegionDao {
 
     }
 
+    @Override
+    public List<Region> getListByPage(int page) {
+        //1 page = 50 entries
+        int from = (page - 1) * 50;
+        int to = page * 50;
+        return statement("SELECT * FROM region LIMIT ?, ?", statement -> {
+            statement.setInt(1, from);
+            statement.setInt(2, to);
+            return fetchRecords(statement, resultSet -> {
+                Population population = new Population();
+                population.setDistribution(resultSet.getInt("distribution"));
+                population.setMigration(resultSet.getInt("migration"));
+                population.setUrbanization(resultSet.getInt("urbanization"));
+                NatureStatus natureStatus = new NatureStatus();
+                natureStatus.setAgricultureLand(resultSet.getInt("agriculture_land"));
+                natureStatus.setForestLand(resultSet.getInt("forest_land"));
+                natureStatus.setDisaster(resultSet.getString("disaster"));
+
+                int id = resultSet.getInt("id");
+                List<IndustrialAgriculturalStatus> list = getRegionStatuses(id);
+                Region region = newRegion(id, resultSet.getString("name"), population, natureStatus);
+                region.setStatuses(new StatusList(list));
+                return region;
+            });
+        });
+    }
+
     private StatusList getRegionStatuses(int id) {
         var list = fetchRecords(
                 statement("SELECT * FROM region_status INNER JOIN status ON region_status.status_id = status.id WHERE region_status.region_id = ?"

@@ -143,6 +143,8 @@ public interface DataAccess<K> {
 
     List<K> getList();
 
+    List<K> getListByPage(int page);
+
     int update(K obj);
 
     void delete(K obj);

@@ -38,6 +38,22 @@ public class AccountDaoImpl implements AccountDao {
     }
 
     @Override
+    public List<Account> getListByPage(int page) {
+        //1 page = 50 entries
+        int from = (page - 1) * 50;
+        int to = page * 50;
+        return statement("SELECT * FROM account LIMIT ?, ?", statement -> {
+            statement.setInt(1, from);
+            statement.setInt(2, to);
+            return fetchRecords(statement, resultSet -> newAccount(
+                    resultSet.getInt("id"),
+                    resultSet.getString("username"),
+                    resultSet.getString("password")
+            ));
+        });
+    }
+
+    @Override
     public int update(Account obj) {
         if (obj.getId() != 0) {
             statement("UPDATE account SET username = ?, password = ? WHERE id = ?", statement -> {

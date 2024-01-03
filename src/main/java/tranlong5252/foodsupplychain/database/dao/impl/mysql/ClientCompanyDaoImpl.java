@@ -37,6 +37,25 @@ public class ClientCompanyDaoImpl implements ClientCompanyDao {
     }
 
     @Override
+    public List<ClientCompany> getListByPage(int page) {
+        //1 page = 50 entries
+        int from = (page - 1) * 50;
+        int to = page * 50;
+        return statement("SELECT * FROM client_company LIMIT ?, ?", statement -> {
+            statement.setInt(1, from);
+            statement.setInt(2, to);
+            return fetchRecords(statement, resultSet -> newCompany(
+                    resultSet.getInt("id"),
+                    resultSet.getString("name"),
+                    resultSet.getString("tax_code"),
+                    resultSet.getString("specification"),
+                    resultSet.getInt("region_id"),
+                    resultSet.getInt("account_id")
+            ));
+        });
+    }
+
+    @Override
     public ClientCompany get(int id) {
         return statement("SELECT * FROM client_company WHERE id = ?", statement -> {
             statement.setInt(1, id);

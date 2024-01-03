@@ -61,6 +61,27 @@ public class IndustrialStatusDaoImpl implements IndustrialStatusDao {
     }
 
     @Override
+    public List<IndustrialAgriculturalStatus> getListByPage(int page) {
+        //1 page = 50 entries
+        int from = (page - 1) * 50;
+        int to = page * 50;
+        return statement("SELECT * FROM status LIMIT ?, ?", statement -> {
+            statement.setInt(1, from);
+            statement.setInt(2, to);
+            return fetchRecords(statement, resultSet ->
+                    newStatus(
+                            resultSet.getInt("id"),
+                            resultSet.getString("name"),
+                            StatusLevel.getByValue(resultSet.getInt("level")),
+                            resultSet.getDouble("value"),
+                            resultSet.getInt("potential"),
+                            resultSet.getInt("development")
+                    )
+            );
+        });
+    }
+
+    @Override
     public int update(IndustrialAgriculturalStatus obj) {
         if (obj.getId() != 0) {
             statement("UPDATE status SET name = ?, level = ?, value = ?, potential = ?, development = ? WHERE id = ?", statement -> {
