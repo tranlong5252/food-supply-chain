@@ -20,18 +20,17 @@ public class CompaniesController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Account account = Util.getAccount(req);
         if (account != null && account.getRole() == 1) {
+            int page = getPage(req);
+            req.setAttribute("page", page);
+            req.setAttribute("maxPage", getMaxPage());
+
             String action = req.getParameter("action");
-            String pageStr = req.getParameter("page");
-            int page = 1;
-            if (pageStr != null) {
-                page = Integer.parseInt(pageStr);
-            }
             switch (action != null ? action : "") {
                 case "searchCompanies":
                     searchCompanies(req, resp);
                     break;
                 default:
-                    req.setAttribute("companies", ClientCompanyDao.getInstance().getList());
+                    req.setAttribute("companies", ClientCompanyDao.getInstance().getListByPage(page));
                     break;
             }
 
@@ -48,7 +47,22 @@ public class CompaniesController extends HttpServlet {
 
     private void searchCompanies(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("companyName");
-        req.setAttribute("companies", ClientCompanyDao.getInstance().search(name));
+        req.setAttribute("companies", ClientCompanyDao.getInstance().search(name, getPage(req)));
+    }
+
+    private int getPage(HttpServletRequest req) {
+        int page = 1;
+        try {
+            page = Integer.parseInt(req.getParameter("page"));
+        } catch (Exception e) {
+        }
+        return page;
+    }
+
+    private int getMaxPage() {
+        int count = ClientCompanyDao.getInstance().count();
+        int maxPage = count / 10 + (count % 10 == 0 ? 0 : 1);
+        return maxPage;
     }
 }
 

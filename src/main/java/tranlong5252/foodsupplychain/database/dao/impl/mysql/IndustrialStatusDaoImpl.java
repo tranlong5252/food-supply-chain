@@ -62,9 +62,8 @@ public class IndustrialStatusDaoImpl implements IndustrialStatusDao {
 
     @Override
     public List<IndustrialAgriculturalStatus> getListByPage(int page) {
-        //1 page = 50 entries
-        int from = (page - 1) * 50;
-        int to = page * 50;
+        int from = (page - 1) * 10;
+        int to = page * 10;
         return statement("SELECT * FROM status LIMIT ?, ?", statement -> {
             statement.setInt(1, from);
             statement.setInt(2, to);

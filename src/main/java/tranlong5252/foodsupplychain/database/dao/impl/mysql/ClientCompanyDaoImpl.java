@@ -38,9 +38,8 @@ public class ClientCompanyDaoImpl implements ClientCompanyDao {
 
     @Override
     public List<ClientCompany> getListByPage(int page) {
-        //1 page = 50 entries
-        int from = (page - 1) * 50;
-        int to = page * 50;
+        int from = (page - 1) * 10;
+        int to = page * 10;
         return statement("SELECT * FROM client_company LIMIT ?, ?", statement -> {
             statement.setInt(1, from);
             statement.setInt(2, to);
@@ -116,10 +115,14 @@ public class ClientCompanyDaoImpl implements ClientCompanyDao {
     }
 
     @Override
-    public List<ClientCompany> search(String name) {
-        String stm = "SELECT * FROM client_company WHERE name LIKE CONCAT('%', ?, '%')";
+    public List<ClientCompany> search(String name, int page) {
+        int from = (page - 1) * 10;
+        int to = page * 10;
+        String stm = "SELECT * FROM client_company WHERE name LIKE CONCAT('%', ?, '%') LIMIT ?, ?";
         return statement(stm, statement -> {
             statement.setString(1, name);
+            statement.setInt(2, from);
+            statement.setInt(3, to);
             return fetchRecords(statement, resultSet -> newCompany(
                     resultSet.getInt("id"),
                     resultSet.getString("name"),

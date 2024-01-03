@@ -107,7 +107,12 @@ public class CompanyController extends HttpServlet {
             deleteClientCompany(req, resp);
         } else if ("searchCompany".equals(action)) {
             String name = req.getParameter("companyName");
-            req.setAttribute("companies", ClientCompanyDao.getInstance().search(name));
+            int page = 1;
+            try {
+                page = Integer.parseInt(req.getParameter("page"));
+            } catch (Exception e) {
+            }
+            req.setAttribute("companies", ClientCompanyDao.getInstance().search(name, page));
         }
         if (req.getAttribute("error") != null) {
             req.getRequestDispatcher("Companies").forward(req, resp);

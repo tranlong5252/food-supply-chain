@@ -18,5 +18,5 @@ public interface ClientCompanyDao extends DataAccess<ClientCompany> {
         }
     }
 
-    List<ClientCompany> search(String name);
+    List<ClientCompany> search(String name, int page);
 }

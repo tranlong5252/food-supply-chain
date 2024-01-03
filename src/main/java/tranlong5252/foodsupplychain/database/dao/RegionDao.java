@@ -18,5 +18,5 @@ public interface RegionDao extends DataAccess<Region> {
         }
     }
 
-    List<Region> search(String name);
+    List<Region> search(String name, int page);
 }

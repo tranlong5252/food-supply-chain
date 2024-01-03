@@ -8,11 +8,12 @@ import java.util.List;
 
 public class AccountDaoImpl implements AccountDao {
 
-    private Account newAccount(int id, String username, String password) {
+    private Account newAccount(int id, String username, String password, int role) {
         Account account = new Account();
         account.setId(id);
         account.setUsername(username);
         account.setPassword(password);
+        account.setRole(role);
         return account;
     }
 
@@ -23,7 +24,8 @@ public class AccountDaoImpl implements AccountDao {
             return fetch(statement, resultSet -> newAccount(
                     resultSet.getInt("id"),
                     resultSet.getString("username"),
-                    resultSet.getString("password")
+                    resultSet.getString("password"),
+                    resultSet.getInt("role")
             ));
         });
     }
@@ -33,22 +35,23 @@ public class AccountDaoImpl implements AccountDao {
         return statement("SELECT * FROM account", statement -> fetchRecords(statement, resultSet -> newAccount(
                 resultSet.getInt("id"),
                 resultSet.getString("username"),
-                resultSet.getString("password")
+                resultSet.getString("password"),
+                resultSet.getInt("role")
         )));
     }
 
     @Override
     public List<Account> getListByPage(int page) {
-        //1 page = 50 entries
-        int from = (page - 1) * 50;
-        int to = page * 50;
+        int from = (page - 1) * 10;
+        int to = page * 10;
         return statement("SELECT * FROM account LIMIT ?, ?", statement -> {
             statement.setInt(1, from);
             statement.setInt(2, to);
             return fetchRecords(statement, resultSet -> newAccount(
                     resultSet.getInt("id"),
                     resultSet.getString("username"),
-                    resultSet.getString("password")
+                    resultSet.getString("password"),
+                    resultSet.getInt("role")
             ));
         });
     }
@@ -100,7 +103,8 @@ public class AccountDaoImpl implements AccountDao {
             return fetch(statement, resultSet -> newAccount(
                     resultSet.getInt("id"),
                     resultSet.getString("username"),
-                    resultSet.getString("password")
+                    resultSet.getString("password"),
+                    resultSet.getInt("role")
             ));
         });
     }

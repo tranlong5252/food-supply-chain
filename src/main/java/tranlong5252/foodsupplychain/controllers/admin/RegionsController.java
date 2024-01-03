@@ -18,7 +18,11 @@ public class RegionsController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Account account = Util.getAccount(req);
-        if (account != null) {
+        if (account != null && account.getRole() == 1) {
+            int page = getPage(req);
+            req.setAttribute("page", page);
+            req.setAttribute("maxPage", getMaxPage());
+
             String action = req.getParameter("action");
             switch (action != null ? action : "") {
                 case "searchRegions":
@@ -62,7 +66,7 @@ public class RegionsController extends HttpServlet {
 
     private void searchRegions(HttpServletRequest req, HttpServletResponse resp) {
         String name = req.getParameter("regionName");
-        req.setAttribute("regions", RegionDao.getInstance().search(name));
+        req.setAttribute("regions", RegionDao.getInstance().search(name, getPage(req)));
     }
 
 
@@ -125,5 +129,20 @@ public class RegionsController extends HttpServlet {
         req.setAttribute("regionNatForMax", natForMax);
         req.setAttribute("regionNatDis", natDis);
         req.setAttribute("regions", new ArrayList<>(regions));
+    }
+
+    private int getPage(HttpServletRequest req) {
+        int page = 1;
+        try {
+            page = Integer.parseInt(req.getParameter("page"));
+        } catch (Exception e) {
+        }
+        return page;
+    }
+
+    private int getMaxPage() {
+        int count = RegionDao.getInstance().count();
+        int maxPage = count / 10 + (count % 10 == 0 ? 0 : 1);
+        return maxPage;
     }
 }

@@ -45,9 +45,8 @@ public class RegionDaoImpl implements RegionDao {
 
     @Override
     public List<Region> getListByPage(int page) {
-        //1 page = 50 entries
-        int from = (page - 1) * 50;
-        int to = page * 50;
+        int from = (page - 1) * 10;
+        int to = page * 10;
         return statement("SELECT * FROM region LIMIT ?, ?", statement -> {
             statement.setInt(1, from);
             statement.setInt(2, to);
@@ -171,9 +170,13 @@ public class RegionDaoImpl implements RegionDao {
     }
 
     @Override
-    public List<Region> search(String name) {
-        return statement("SELECT * FROM region WHERE name LIKE CONCAT( '%',?,'%')", statement -> {
+    public List<Region> search(String name, int page) {
+        int from = (page - 1) * 10;
+        int to = page * 10;
+        return statement("SELECT * FROM region WHERE name LIKE CONCAT( '%',?,'%') LIMIT ?, ?", statement -> {
             statement.setString(1, name);
+            statement.setInt(2, from);
+            statement.setInt(3, to);
             List<Region> region = fetchRecords(statement, resultSet -> {
                 Population population = new Population();
                 population.setDistribution(resultSet.getInt("distribution"));

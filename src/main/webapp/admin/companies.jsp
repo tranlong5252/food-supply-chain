@@ -66,7 +66,29 @@
             </div>
             <div class="table-responsive">
                 <table class="table table-sm table-primary table-striped table-hover caption-top table-bordered">
-                <caption>Companies</caption>
+                <caption>
+                    <c:if test="${requestScope.page != null}">
+                        <c:forEach var="i" begin="1" end="${requestScope.maxPage}" step="1">
+<%--                            append current parameters--%>
+                            <c:url value="Companies" var="url">
+                                <c:param name="page" value="${i}"/>
+                                <c:if test="${param.companyName != null}">
+                                    <c:param name="companyName" value="${param.companyName}"/>
+                                </c:if>
+                                <c:if test="${param.action != null}">
+                                    <c:param name="action" value="${param.action}"/>
+                                </c:if>
+                            </c:url>
+<%--                            action--%>
+                            <c:if test="${requestScope.page == i}">
+                                <a href="${url}" class="btn btn-sm btn-secondary">${i}</a>
+                            </c:if>
+                            <c:if test="${requestScope.page != i}">
+                                <a href="${url}" class="btn btn-sm btn-outline-secondary">${i}</a>
+                            </c:if>
+                        </c:forEach>
+                    </c:if>
+                </caption>
                 <thead class="table-light">
                 <tr>
                     <th scope="col">ID</th>
