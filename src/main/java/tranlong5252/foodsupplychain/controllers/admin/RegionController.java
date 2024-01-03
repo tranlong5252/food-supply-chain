@@ -1,4 +1,4 @@
-package tranlong5252.foodsupplychain.controllers;
+package tranlong5252.foodsupplychain.controllers.admin;
 
 import tranlong5252.foodsupplychain.constants.StatusLevel;
 import tranlong5252.foodsupplychain.database.dao.IndustrialStatusDao;
@@ -166,8 +166,6 @@ public class RegionController extends HttpServlet {
 
     private void deleteRegionStatus(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();
-        List<Region> regions = RegionDao.getInstance().getList();
-        if (regions != null) {
             try {
                 int regionId = Integer.parseInt(req.getParameter("regionId"));
                 Region region = RegionDao.getInstance().get(regionId);
@@ -178,7 +176,6 @@ public class RegionController extends HttpServlet {
                     region.getStatuses().remove(status);
                     IndustrialStatusDao.getInstance().delete(status);
                     RegionDao.getInstance().update(region);
-                    session.setAttribute("regions", regions);
                     session.setAttribute("region", region);
                 } else {
                     req.setAttribute("error", "Không tìm thấy trạng thái");
@@ -187,9 +184,6 @@ public class RegionController extends HttpServlet {
             } catch (Exception e) {
                 req.setAttribute("error", e.getMessage());
             }
-        } else {
-            req.setAttribute("error", "Không tìm thấy danh sách khu vực");
-        }
     }
 
     @Override

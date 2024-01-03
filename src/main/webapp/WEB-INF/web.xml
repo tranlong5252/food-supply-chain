@@ -43,7 +43,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>CompaniesController</servlet-name>
-        <servlet-class>tranlong5252.foodsupplychain.controllers.CompaniesController</servlet-class>
+        <servlet-class>tranlong5252.foodsupplychain.controllers.admin.CompaniesController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CompaniesController</servlet-name>
@@ -51,7 +51,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>CompanyController</servlet-name>
-        <servlet-class>tranlong5252.foodsupplychain.controllers.CompanyController</servlet-class>
+        <servlet-class>tranlong5252.foodsupplychain.controllers.admin.CompanyController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CompanyController</servlet-name>
@@ -59,7 +59,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>RegionsController</servlet-name>
-        <servlet-class>tranlong5252.foodsupplychain.controllers.RegionsController</servlet-class>
+        <servlet-class>tranlong5252.foodsupplychain.controllers.admin.RegionsController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RegionsController</servlet-name>
@@ -67,7 +67,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>RegionController</servlet-name>
-        <servlet-class>tranlong5252.foodsupplychain.controllers.RegionController</servlet-class>
+        <servlet-class>tranlong5252.foodsupplychain.controllers.admin.RegionController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RegionController</servlet-name>

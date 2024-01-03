@@ -1,4 +1,4 @@
-package tranlong5252.foodsupplychain.controllers;
+package tranlong5252.foodsupplychain.controllers.admin;
 
 import tranlong5252.foodsupplychain.database.dao.ClientCompanyDao;
 import tranlong5252.foodsupplychain.database.dao.RegionDao;
@@ -19,8 +19,13 @@ public class CompaniesController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Account account = Util.getAccount(req);
-        if (account != null) {
+        if (account != null && account.getRole() == 1) {
             String action = req.getParameter("action");
+            String pageStr = req.getParameter("page");
+            int page = 1;
+            if (pageStr != null) {
+                page = Integer.parseInt(pageStr);
+            }
             switch (action != null ? action : "") {
                 case "searchCompanies":
                     searchCompanies(req, resp);
@@ -33,7 +38,7 @@ public class CompaniesController extends HttpServlet {
             List<Region> regions = RegionDao.getInstance().getList();
             req.setAttribute("regions", regions);
 
-            req.getRequestDispatcher("companies.jsp").forward(req, resp);
+            req.getRequestDispatcher("admin/companies.jsp").forward(req, resp);
         } else {
             HttpSession session = req.getSession();
             session.setAttribute("redirect", "Companies");

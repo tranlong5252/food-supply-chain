@@ -1,4 +1,4 @@
-package tranlong5252.foodsupplychain.controllers;
+package tranlong5252.foodsupplychain.controllers.admin;
 
 import tranlong5252.foodsupplychain.database.dao.RegionDao;
 import tranlong5252.foodsupplychain.model.Account;
@@ -49,7 +49,7 @@ public class RegionsController extends HttpServlet {
                 //case "filterRegions":
 
                 default:
-                    req.getRequestDispatcher("regions.jsp").forward(req, resp);
+                    req.getRequestDispatcher("admin/regions.jsp").forward(req, resp);
                     break;
             }
 
