@@ -121,4 +121,16 @@ public class IndustrialStatusDaoImpl implements IndustrialStatusDao {
             return null;
         });
     }
+
+    @Override
+    public int count() {
+        return statement("SELECT * FROM status", statement -> {
+            ResultSet resultSet = statement.executeQuery();
+            int count = 0;
+            while (resultSet.next()) {
+                count++;
+            }
+            return count;
+        });
+    }
 }

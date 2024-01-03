@@ -148,4 +148,6 @@ public interface DataAccess<K> {
     int update(K obj);
 
     void delete(K obj);
+
+    int count();
 }

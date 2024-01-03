@@ -162,6 +162,15 @@ public class RegionDaoImpl implements RegionDao {
     }
 
     @Override
+    public int count() {
+        return statement("SELECT COUNT(*) FROM region", statement -> {
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt(1);
+        });
+    }
+
+    @Override
     public List<Region> search(String name) {
         return statement("SELECT * FROM region WHERE name LIKE CONCAT( '%',?,'%')", statement -> {
             statement.setString(1, name);

@@ -84,6 +84,15 @@ public class AccountDaoImpl implements AccountDao {
     }
 
     @Override
+    public int count() {
+        return statement("SELECT COUNT(*) FROM account", statement -> {
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt(1);
+        });
+    }
+
+    @Override
     public Account login(String username, String password) {
         return statement("SELECT * FROM account WHERE username = ? AND password = ?", statement -> {
             statement.setString(1, username);
