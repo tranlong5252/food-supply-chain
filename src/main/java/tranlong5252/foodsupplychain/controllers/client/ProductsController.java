@@ -1,4 +1,4 @@
-package tranlong5252.foodsupplychain.controllers;
+package tranlong5252.foodsupplychain.controllers.client;
 
 import tranlong5252.foodsupplychain.database.dao.ProductDao;
 import tranlong5252.foodsupplychain.model.Account;
