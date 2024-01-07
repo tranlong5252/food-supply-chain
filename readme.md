@@ -1,23 +1,48 @@
-Logistics always plays a critical role in any aspect of our lives.
-Supreme Logics Co is one of the biggest and wealthiest companies in the world which holds a 30% of global food supply
-chain.
+# Food Supply Chain - Manage your food supply chain with ease
 
-However, they are facing a big problem.
-For many years, they have been managing their business with paper and with the explosion of the world economy in recent
-years, paper is no longer suitable for such fast-growing events.
-They quickly realize that and pay money to hire many IT experts to help them solve the problem.
+## Introduction
+Food Supply Chain is a web application that helps you manage your food supply chain with ease.
+This README provides an overview of the project, its features, and the technologies used in its development.
 
-You are one of the experts who are required to achieve the best solutions:
+## Features
 
-- You will make a web application for Supreme Logics Co to manage their food supply chain.
-- The company has to manage food supply chains for many regions such as Asia-Pacific, North America, South America,
-  Southeast Asia, etc.
-- In every region has it own industrial and agricultural status (name: text, level: high/low/medium, value: % decimal,
-  potential: integer 1-10, development: integer 1-10), population (distribution: decimal, migration: integer 1-10,
-  urbanization: integer 1-10) and nature status (agriculture land: % decimal, forest land: % decimal, disaster: can be
-  many value like earthquake, typhoon, tsunami, etc.)
-- Supreme Logics Co acts like a middle man to buy food from manufacturing companies and distribute/sell to needed
-  companies, thus, they also want to manage their client companies. Each company should have its legal name, tax code,
-  region, the industry/agriculture which it participates in.
-- Your web application should be able to manage all the information above with ease (contains high user-supporting
-  features like search, filter, account for admin and clients, etc.)
+1. **User Authentication:**
+    - Login/Logout: Users can securely log in and out of their accounts. The company want to join the system must be approved by the admin.
+
+2. **Regions Management:**
+    - View Regions: Users can view all regions in the system.
+    - Add Region: Users can add new regions to the system.
+    - Edit Region: Users can edit existing regions in the system.
+    - Delete Region: Users can delete existing regions in the system.
+
+3. **Companies Management:**
+    - View Companies: Users can view all companies in the system.
+    - Add Company: Users can add new companies to the system.
+    - Edit Company: Users can edit existing companies in the system.
+    - Delete Company: Users can delete existing companies in the system.
+    
+4. **Products Management:**
+    - View Products: Users can view all products in the system.
+    - Add Product: Users can add new products to the system.
+    - Edit Product: Users can edit existing products in the system.
+    - Delete Product: Users can delete existing products in the system.
+
+6. **Technology Stack:**
+  - **JDK 1.8:** MagicBook is developed using Java Development Kit version 1.8.
+  - **IntelliJ:** The project is developed using the IntelliJ IDE.
+  - **MySQL:** Database management is handled using MySQL for storing user data and posts.
+  - **Java Servlet:** MagicBook utilizes Java Servlet technology for server-side processing.
+  - **Apache Tomcat 8.5:** The project is deployed on the Apache Tomcat web server version 8.5.
+
+## Future Enhancements
+The project currently lacks real-time notification functionality. Future updates may include the implementation of real-time notifications to keep users informed about activities, messages, and updates in real-time.
+
+## Getting Started
+1. Clone the repository: `https://github.com/tranlong5252/food-supply-chain`
+2. Import the project into IntelliJ.
+3. Set up the MySQL database and configure the connection details in the project.
+4. Deploy the project on Apache Tomcat 8.5.
+5. Access Food Supply Chain through your web browser.
+
+## Contribution
+We welcome contributions and feedback from the community. If you would like to contribute or report issues, please feel free to submit a pull request or open an issue on the project's GitHub repository.
