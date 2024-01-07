@@ -534,7 +534,10 @@
 </body>
 <script type="text/javascript">
     function selectRegion(id) {
-        document.getElementById("selectRegion_" + id).submit();
+        //check if select input in table cause accidentally select region
+        if (event.target.tagName.toLowerCase() !== 'input') {
+            document.getElementById('selectRegion_' + id).submit();
+        }
     }
 </script>
 </html>
