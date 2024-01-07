@@ -46,7 +46,7 @@
 
 <div class="container">
     <c:if test="${requestScope.error != null}">
-        <p>${requestScope.error}</p>
+        <p class="text-bg-warning">${requestScope.error}</p>
     </c:if>
 
     <h1>Regions management</h1>
@@ -339,32 +339,32 @@
                         <td>
                             <label>
                                 <input class="form-control-plaintext" type="number" name="regionPopDis" form="addRegion"
-                                       placeholder="Enter number" required>
+                                       placeholder="Enter number" required min="1" max="10" step="any">
                             </label>
                         </td>
                         <td>
                             <label>
                                 <input class="form-control-plaintext" type="number" name="regionPopMig" form="addRegion"
-                                       placeholder="Enter number" required>
+                                       placeholder="Enter number" required min="1" max="10" step="any">
                             </label>
                         </td>
                         <td>
                             <label>
                                 <input class="form-control-plaintext" type="number" name="regionPopUrb" form="addRegion"
-                                       placeholder="Enter number" required>
+                                       placeholder="Enter number" required min="1" max="10" step="any">
                             </label>
                         </td>
                         <td>
                             <label>
                                 <input class="form-control-plaintext" type="number" name="regionNatAgri"
                                        form="addRegion"
-                                       placeholder="Enter number" required>
+                                       placeholder="Enter number" required min="0" max="100" step="any">
                             </label>
                         </td>
                         <td>
                             <label>
                                 <input class="form-control-plaintext" type="number" name="regionNatFor" form="addRegion"
-                                       placeholder="Enter number" required>
+                                       placeholder="Enter number" required min="0" max="100" step="any">
                             </label>
                         </td>
                         <td>
