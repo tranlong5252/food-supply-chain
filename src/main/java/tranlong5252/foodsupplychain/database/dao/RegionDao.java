@@ -19,4 +19,9 @@ public interface RegionDao extends DataAccess<Region> {
     }
 
     List<Region> search(String name, int page);
+
+    List<Region> filter(int page,
+                        double minDis, double maxDis, int minMig, int maxMig, int minUrban, int maxUrban,
+                        double minAgr, double maxAgr, double minFor, double maxFor, String disaster
+    );
 }

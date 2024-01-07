@@ -3,7 +3,6 @@ package tranlong5252.foodsupplychain.controllers.admin;
 import tranlong5252.foodsupplychain.database.dao.RegionDao;
 import tranlong5252.foodsupplychain.model.Account;
 import tranlong5252.foodsupplychain.model.Region;
-import tranlong5252.foodsupplychain.model.RegionList;
 import tranlong5252.foodsupplychain.utils.Util;
 
 import javax.servlet.ServletException;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class RegionsController extends HttpServlet {
     @Override
@@ -83,40 +81,42 @@ public class RegionsController extends HttpServlet {
         String natForMin = req.getParameter("regionNatForMin");
         String natForMax = req.getParameter("regionNatForMax");
         String natDis = req.getParameter("regionNatDis");
-        RegionList regions = new RegionList(RegionDao.getInstance().getList());
+
+        double popDisMinValue = 0;
+        double popDisMaxValue = Double.MAX_VALUE;
+        int popMigMinValue = 1;
+        int popMigMaxValue = 10;
+        int popUrbMinValue = 1;
+        int popUrbMaxValue = 10;
+        double natAgriMinValue = 0;
+        double natAgriMaxValue = 100;
+        double natForMinValue = 0;
+        double natForMaxValue = 100;
+
         if (popDisMin != null && !popDisMin.isEmpty()) {
-            regions = regions.filterByPopulationDistributionMin(Double.parseDouble(popDisMin));
+            popDisMinValue = Double.parseDouble(popDisMin);
         }
         if (popDisMax != null && !popDisMax.isEmpty()) {
-            regions = regions.filterByPopulationDistributionMax(Double.parseDouble(popDisMax));
+            popDisMaxValue = Double.parseDouble(popDisMax);
         }
         if (popMigMin != null && !popMigMin.isEmpty()) {
-            regions = regions.filterByPopulationMigrationMin(Integer.parseInt(popMigMin));
+            popMigMinValue = Integer.parseInt(popMigMin);
         }
         if (popMigMax != null && !popMigMax.isEmpty()) {
-            regions = regions.filterByPopulationMigrationMax(Integer.parseInt(popMigMax));
+            popMigMaxValue = Integer.parseInt(popMigMax);
         }
         if (popUrbMin != null && !popUrbMin.isEmpty()) {
-            regions = regions.filterByPopulationUrbanizationMin(Integer.parseInt(popUrbMin));
+            popUrbMinValue = Integer.parseInt(popUrbMin);
         }
         if (popUrbMax != null && !popUrbMax.isEmpty()) {
-            regions = regions.filterByPopulationUrbanizationMax(Integer.parseInt(popUrbMax));
+            popUrbMaxValue = Integer.parseInt(popUrbMax);
         }
-        if (natAgriMin != null && !natAgriMin.isEmpty()) {
-            regions = regions.filterByNatureAgricultureLandMin(Double.parseDouble(natAgriMin));
-        }
-        if (natAgriMax != null && !natAgriMax.isEmpty()) {
-            regions = regions.filterByNatureAgricultureLandMax(Double.parseDouble(natAgriMax));
-        }
-        if (natForMin != null && !natForMin.isEmpty()) {
-            regions = regions.filterByNatureForestLandMin(Double.parseDouble(natForMin));
-        }
-        if (natForMax != null && !natForMax.isEmpty()) {
-            regions = regions.filterByNatureForestLandMax(Double.parseDouble(natForMax));
-        }
-        if (natDis != null && !natDis.isEmpty()) {
-            regions = regions.filterByNatureDisaster(natDis);
-        }
+
+        var regions = RegionDao.getInstance().filter(getPage(req),
+                popDisMinValue, popDisMaxValue, popMigMinValue, popMigMaxValue, popUrbMinValue, popUrbMaxValue,
+                natAgriMinValue, natAgriMaxValue, natForMinValue, natForMaxValue, natDis
+        );
+
         req.setAttribute("regionPopDisMin", popDisMin);
         req.setAttribute("regionPopDisMax", popDisMax);
         req.setAttribute("regionPopMigMin", popMigMin);
@@ -128,7 +128,7 @@ public class RegionsController extends HttpServlet {
         req.setAttribute("regionNatForMin", natForMin);
         req.setAttribute("regionNatForMax", natForMax);
         req.setAttribute("regionNatDis", natDis);
-        req.setAttribute("regions", new ArrayList<>(regions));
+        req.setAttribute("regions", regions);
     }
 
     private int getPage(HttpServletRequest req) {
@@ -142,7 +142,6 @@ public class RegionsController extends HttpServlet {
 
     private int getMaxPage() {
         int count = RegionDao.getInstance().count();
-        int maxPage = count / 10 + (count % 10 == 0 ? 0 : 1);
-        return maxPage;
+        return count / 10 + (count % 10 == 0 ? 0 : 1);
     }
 }

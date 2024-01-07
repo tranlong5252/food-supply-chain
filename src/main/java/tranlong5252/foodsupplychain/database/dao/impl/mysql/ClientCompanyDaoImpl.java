@@ -6,6 +6,7 @@ import tranlong5252.foodsupplychain.database.dao.RegionDao;
 import tranlong5252.foodsupplychain.model.ClientCompany;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public class ClientCompanyDaoImpl implements ClientCompanyDao {
@@ -96,7 +97,7 @@ public class ClientCompanyDaoImpl implements ClientCompanyDao {
     }
 
     @Override
-    public void delete(ClientCompany company) {
+    public void delete(ClientCompany company) throws SQLException {
         statement("DELETE FROM client_company WHERE id = ?", statement -> {
             statement.setInt(1, company.getId());
             statement.executeUpdate();

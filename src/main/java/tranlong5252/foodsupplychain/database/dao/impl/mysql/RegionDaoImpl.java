@@ -1,6 +1,7 @@
 package tranlong5252.foodsupplychain.database.dao.impl.mysql;
 
 import tranlong5252.foodsupplychain.constants.StatusLevel;
+import tranlong5252.foodsupplychain.database.dao.IndustrialStatusDao;
 import tranlong5252.foodsupplychain.database.dao.RegionDao;
 import tranlong5252.foodsupplychain.model.IndustrialAgriculturalStatus;
 import tranlong5252.foodsupplychain.model.NatureStatus;
@@ -8,7 +9,9 @@ import tranlong5252.foodsupplychain.model.Population;
 import tranlong5252.foodsupplychain.model.Region;
 import tranlong5252.foodsupplychain.model.StatusList;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public class RegionDaoImpl implements RegionDao {
@@ -20,6 +23,24 @@ public class RegionDaoImpl implements RegionDao {
         region.setPopulation(population);
         region.setNatureStatus(natureStatus);
         return region;
+    }
+
+    private List<Region> getRegions(PreparedStatement statement) {
+        List<Region> regions = fetchRecords(statement, resultSet -> {
+            Population population = new Population();
+            population.setDistribution(resultSet.getInt("distribution"));
+            population.setMigration(resultSet.getInt("migration"));
+            population.setUrbanization(resultSet.getInt("urbanization"));
+            NatureStatus natureStatus = new NatureStatus();
+            natureStatus.setAgricultureLand(resultSet.getInt("agriculture_land"));
+            natureStatus.setForestLand(resultSet.getInt("forest_land"));
+            natureStatus.setDisaster(resultSet.getString("disaster"));
+            return newRegion(resultSet.getInt("id"), resultSet.getString("name"), population, natureStatus);
+        });
+        if (regions != null) {
+            regions.forEach(region1 -> region1.setStatuses(getRegionStatuses(region1.getId())));
+        }
+        return regions;
     }
 
     @Override
@@ -152,9 +173,26 @@ public class RegionDaoImpl implements RegionDao {
     }
 
     @Override
-    public void delete(Region obj) {
+    public void delete(Region region) throws SQLException {
+        //check if regions has company assigned
+        var check = statement("SELECT * FROM client_company WHERE region_id = ?", statement -> {
+            statement.setInt(1, region.getId());
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+               return 1;
+            }
+            return 0;
+        });
+        if (check == 1) {
+            throw new SQLException("Cannot delete Region " + region.getName() + ": One or more companies assigned");
+        }
+
+        for (IndustrialAgriculturalStatus status : region.getStatuses()) {
+            IndustrialStatusDao.getInstance().delete(status);
+        }
+
         statement("DELETE FROM region WHERE id = ?", statement -> {
-            statement.setInt(1, obj.getId());
+            statement.setInt(1, region.getId());
             statement.executeUpdate();
             return null;
         });
@@ -177,21 +215,30 @@ public class RegionDaoImpl implements RegionDao {
             statement.setString(1, name);
             statement.setInt(2, from);
             statement.setInt(3, to);
-            List<Region> region = fetchRecords(statement, resultSet -> {
-                Population population = new Population();
-                population.setDistribution(resultSet.getInt("distribution"));
-                population.setMigration(resultSet.getInt("migration"));
-                population.setUrbanization(resultSet.getInt("urbanization"));
-                NatureStatus natureStatus = new NatureStatus();
-                natureStatus.setAgricultureLand(resultSet.getInt("agriculture_land"));
-                natureStatus.setForestLand(resultSet.getInt("forest_land"));
-                natureStatus.setDisaster(resultSet.getString("disaster"));
-                return newRegion(resultSet.getInt("id"), resultSet.getString("name"), population, natureStatus);
-            });
-            if (region != null) {
-                region.forEach(region1 -> region1.setStatuses(getRegionStatuses(region1.getId())));
-            }
-            return region;
+            return getRegions(statement);
+        });
+    }
+
+    @Override
+    public List<Region> filter(int page, double minDis, double maxDis, int minMig, int maxMig, int minUrban, int maxUrban, double minAgr, double maxAgr, double minFor, double maxFor, String disaster) {
+        int from = (page - 1) * 10;
+        int to = page * 10;
+        String stm = "SELECT * FROM region WHERE distribution >= ? AND distribution <= ? AND migration >= ? AND migration <= ? AND urbanization >= ? AND urbanization <= ? AND agriculture_land >= ? AND agriculture_land <= ? AND forest_land >= ? AND forest_land <= ? AND disaster LIKE CONCAT('%', ?, '%') LIMIT ?, ? ";
+        return statement(stm, statement -> {
+            statement.setDouble(1, minDis);
+            statement.setDouble(2, maxDis);
+            statement.setInt(3, minMig);
+            statement.setInt(4, maxMig);
+            statement.setInt(5, minUrban);
+            statement.setInt(6, maxUrban);
+            statement.setDouble(7, minAgr);
+            statement.setDouble(8, maxAgr);
+            statement.setDouble(9, minFor);
+            statement.setDouble(10, maxFor);
+            statement.setString(11, disaster);
+            statement.setInt(12, from);
+            statement.setInt(13, to);
+            return getRegions(statement);
         });
     }
 }

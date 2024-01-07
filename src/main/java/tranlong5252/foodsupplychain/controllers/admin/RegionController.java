@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 public class RegionController extends HttpServlet {
@@ -111,15 +112,17 @@ public class RegionController extends HttpServlet {
 
         try {
             int id = Integer.parseInt(req.getParameter("regionId"));
-            Region region = RegionDao.getInstance().get(id);
-
-            for (IndustrialAgriculturalStatus status : region.getStatuses()) {
-                IndustrialStatusDao.getInstance().delete(status);
+            RegionDao dao = RegionDao.getInstance();
+            Region region = dao.get(id);
+            try {
+                dao.delete(region);
+            } catch (SQLException e) {
+                req.setAttribute("error", e.getMessage());
+                return;
             }
-            RegionDao.getInstance().delete(region);
-            //session.setAttribute("regions", regions);
+
             Region regionSession = (Region) session.getAttribute("region");
-            if (region.getId() == regionSession.getId()) {
+            if (regionSession != null && region.getId() == regionSession.getId()) {
                 session.removeAttribute("region");
             }
         } catch (Exception e) {
@@ -166,24 +169,24 @@ public class RegionController extends HttpServlet {
 
     private void deleteRegionStatus(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = req.getSession();
-            try {
-                int regionId = Integer.parseInt(req.getParameter("regionId"));
-                Region region = RegionDao.getInstance().get(regionId);
+        try {
+            int regionId = Integer.parseInt(req.getParameter("regionId"));
+            Region region = RegionDao.getInstance().get(regionId);
 
-                int statusId = Integer.parseInt(req.getParameter("statusId"));
-                IndustrialAgriculturalStatus status = region.getStatuses().getById(statusId);
-                if (status != null) {
-                    region.getStatuses().remove(status);
-                    IndustrialStatusDao.getInstance().delete(status);
-                    RegionDao.getInstance().update(region);
-                    session.setAttribute("region", region);
-                } else {
-                    req.setAttribute("error", "Không tìm thấy trạng thái");
-                }
-
-            } catch (Exception e) {
-                req.setAttribute("error", e.getMessage());
+            int statusId = Integer.parseInt(req.getParameter("statusId"));
+            IndustrialAgriculturalStatus status = region.getStatuses().getById(statusId);
+            if (status != null) {
+                region.getStatuses().remove(status);
+                IndustrialStatusDao.getInstance().delete(status);
+                RegionDao.getInstance().update(region);
+                session.setAttribute("region", region);
+            } else {
+                req.setAttribute("error", "Không tìm thấy trạng thái");
             }
+
+        } catch (Exception e) {
+            req.setAttribute("error", e.getMessage());
+        }
     }
 
     @Override

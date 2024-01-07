@@ -147,7 +147,7 @@ public interface DataAccess<K> {
 
     int update(K obj);
 
-    void delete(K obj);
+    void delete(K obj) throws SQLException;
 
     int count();
 }
