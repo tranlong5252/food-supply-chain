@@ -11,48 +11,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
             crossorigin="anonymous"></script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-<div class="header">
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="${pageContext.request.contextPath}/">Supreme Logics Co</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="Companies">Companies</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="Regions">Regions</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="Products">Products</a>
-                    </li>
-                </ul>
-                <c:choose>
-                    <c:when test="${cookie.accountId != null}">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link link-danger" href="Logout">Logout</a>
-                            </li>
-                        </ul>
-
-                    </c:when>
-                    <c:otherwise>
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link" href="Login">Login</a>
-                            </li>
-                        </ul>
-                    </c:otherwise>
-                </c:choose>
-            </div>
-        </div>
-    </nav>
-</div>
+<%@include file="components/header.jsp" %>
 
 <div class="container">
     <div class="row">
@@ -67,21 +30,32 @@
                 </c:if>
                 <div class="card-body">
 
-                    <form method="POST">
-                        <div class="mb-3">
-                            <label class="form-label" for="username">Username</label>
-                            <input class="form-control" type="text" id="username" name="username">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="password">Password</label>
-                            <input class="form-control" type="password" id="password" name="password">
-                        </div>
-                        <div class="d-grid">
-                            <button class="btn btn-primary" type="submit">Login</button>
-                        </div>
-                    </form>
+                    <form method="POST" id="login"></form>
+                    <label class="form-label" for="username">Username</label>
+
+                    <div class="input-group mb-3">
+                        <input class="form-control" type="text" id="username" name="username" form="login">
+                    </div>
+
+                    <label class="form-label" for="password">Password</label>
+                    <div class="input-group mb-3">
+                        <input class="form-control" type="password" id="password" name="password" form="login">
+                        <span class="input-group-text" id="show_hide_password">
+                            <i>
+                                <a href="" class="fa fa-eye-slash" aria-hidden=true style="text-decoration:none"></a>
+                            </i>
+                        </span>
+                    </div>
+                    <div class="d-grid">
+                        <button class="btn btn-primary" type="submit" form="login">Login</button>
+                    </div>
+
                 </div>
-                <div class="card-footer"></div>
+                <div class="card-footer">
+<%--                    forgot password?--%>
+                    <a href="javascript:void(0)" style="text-decoration:none" onclick="location.href='https://www.youtube.com/watch?v=UqOReQEvwkM'">Forgot password?</a>
+                    <br>
+                </div>
             </div>
         </div>
         <div class="col-4"></div>
@@ -89,3 +63,28 @@
 </div>
 </body>
 </html>
+<script>
+    {
+        let showHidePassword = document.getElementById("show_hide_password");
+        showHidePassword.addEventListener("click", function (event) {
+            event.preventDefault();
+            showPassword();
+        });
+
+        function showPassword() {
+            let password = document.getElementById("password");
+
+            if (password.type === "password") {
+                password.type = "text";
+                let icon = document.querySelector(".fa-eye-slash");
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+            } else {
+                password.type = "password";
+                let icon = document.querySelector(".fa-eye");
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            }
+        }
+    }
+</script>

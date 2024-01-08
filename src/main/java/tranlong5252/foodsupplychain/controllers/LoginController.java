@@ -2,6 +2,7 @@ package tranlong5252.foodsupplychain.controllers;
 
 import tranlong5252.foodsupplychain.database.dao.AccountDao;
 import tranlong5252.foodsupplychain.model.Account;
+import tranlong5252.foodsupplychain.utils.Encryption;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.UUID;
 
 public class LoginController extends HttpServlet {
 

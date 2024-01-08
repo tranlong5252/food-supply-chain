@@ -14,7 +14,7 @@
 </head>
 <body>
 
-
+<%@include file="components/header.jsp"%>
 
 <div class="container">
     <h1>Welcome to our shop!</h1>

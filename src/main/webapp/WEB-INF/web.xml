@@ -73,4 +73,32 @@
         <servlet-name>RegionController</servlet-name>
         <url-pattern>/Region</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>AccountController</servlet-name>
+        <servlet-class>tranlong5252.foodsupplychain.controllers.common.AccountController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AccountController</servlet-name>
+        <url-pattern>/Account</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ChangePasswordController</servlet-name>
+        <servlet-class>tranlong5252.foodsupplychain.controllers.common.ChangePasswordController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ChangePasswordController</servlet-name>
+        <url-pattern>/ChangePassword</url-pattern>
+    </servlet-mapping>
+
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>tranlong5252.foodsupplychain.filters.AuthFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 </web-app>
