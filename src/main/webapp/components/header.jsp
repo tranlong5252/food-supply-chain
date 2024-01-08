@@ -22,6 +22,9 @@
           <c:when test="${cookie.accountId != null}">
             <ul class="navbar-nav">
               <li class="nav-item">
+                <a class="nav-link" href="Account">Hi ${sessionScope.username}</a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link link-danger" href="Logout">Logout</a>
               </li>
             </ul>

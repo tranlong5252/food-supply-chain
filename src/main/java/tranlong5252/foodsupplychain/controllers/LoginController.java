@@ -24,6 +24,7 @@ public class LoginController extends HttpServlet {
         if (account != null) {
             Cookie cookie = new Cookie("accountId", String.valueOf(account.getId()));
             resp.addCookie(cookie);
+            session.setAttribute("username", account.getUsername());
             String redirect = (String) session.getAttribute("redirect");
             if (redirect == null || redirect.isEmpty()) {
                 resp.sendRedirect(resp.encodeRedirectURL(req.getContextPath() + "/"));
