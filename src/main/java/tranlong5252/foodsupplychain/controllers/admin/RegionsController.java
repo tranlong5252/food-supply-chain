@@ -111,6 +111,41 @@ public class RegionsController extends HttpServlet {
         if (popUrbMax != null && !popUrbMax.isEmpty()) {
             popUrbMaxValue = Integer.parseInt(popUrbMax);
         }
+        if (natAgriMin != null && !natAgriMin.isEmpty()) {
+            natAgriMinValue = Double.parseDouble(natAgriMin);
+        }
+        if (natAgriMax != null && !natAgriMax.isEmpty()) {
+            natAgriMaxValue = Double.parseDouble(natAgriMax);
+        }
+        if (natForMin != null && !natForMin.isEmpty()) {
+            natForMinValue = Double.parseDouble(natForMin);
+        }
+
+        if (popDisMinValue > popDisMaxValue) {
+            double temp = popDisMinValue;
+            popDisMinValue = popDisMaxValue;
+            popDisMaxValue = temp;
+        }
+        if (popMigMinValue > popMigMaxValue) {
+            int temp = popMigMinValue;
+            popMigMinValue = popMigMaxValue;
+            popMigMaxValue = temp;
+        }
+        if (popUrbMinValue > popUrbMaxValue) {
+            int temp = popUrbMinValue;
+            popUrbMinValue = popUrbMaxValue;
+            popUrbMaxValue = temp;
+        }
+        if (natAgriMinValue > natAgriMaxValue) {
+            double temp = natAgriMinValue;
+            natAgriMinValue = natAgriMaxValue;
+            natAgriMaxValue = temp;
+        }
+        if (natForMinValue > natForMaxValue) {
+            double temp = natForMinValue;
+            natForMinValue = natForMaxValue;
+            natForMaxValue = temp;
+        }
 
         var regions = RegionDao.getInstance().filter(getPage(req),
                 popDisMinValue, popDisMaxValue, popMigMinValue, popMigMaxValue, popUrbMinValue, popUrbMaxValue,
