@@ -116,6 +116,16 @@ public class ClientCompanyDaoImpl implements ClientCompanyDao {
     }
 
     @Override
+    public int countSearch(String name) {
+        return statement("SELECT COUNT(*) FROM client_company WHERE name LIKE CONCAT('%', ?, '%')", statement -> {
+            statement.setString(1, "%" + name + "%");
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt(1);
+        });
+    }
+
+    @Override
     public List<ClientCompany> search(String name, int page) {
         int from = (page - 1) * 10;
         int to = page * 10;

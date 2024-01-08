@@ -150,4 +150,6 @@ public interface DataAccess<K> {
     void delete(K obj) throws SQLException;
 
     int count();
+
+    int countSearch(String name);
 }

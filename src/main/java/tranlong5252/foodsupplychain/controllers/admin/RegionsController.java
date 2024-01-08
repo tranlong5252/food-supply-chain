@@ -65,6 +65,7 @@ public class RegionsController extends HttpServlet {
     private void searchRegions(HttpServletRequest req, HttpServletResponse resp) {
         String name = req.getParameter("regionName");
         req.setAttribute("regions", RegionDao.getInstance().search(name, getPage(req)));
+        req.setAttribute("maxPage", RegionDao.getInstance().countSearch(name) / 10 + 1);
     }
 
 

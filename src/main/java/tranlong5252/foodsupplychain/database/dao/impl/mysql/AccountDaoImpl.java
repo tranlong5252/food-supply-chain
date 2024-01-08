@@ -96,6 +96,16 @@ public class AccountDaoImpl implements AccountDao {
     }
 
     @Override
+    public int countSearch(String name) {
+        return statement("SELECT COUNT(*) FROM account WHERE username LIKE CONCAT('%', ?, '%')", statement -> {
+            statement.setString(1, "%" + name + "%");
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt(1);
+        });
+    }
+
+    @Override
     public Account login(String username, String password) {
         return statement("SELECT * FROM account WHERE username = ? AND password = ?", statement -> {
             statement.setString(1, username);

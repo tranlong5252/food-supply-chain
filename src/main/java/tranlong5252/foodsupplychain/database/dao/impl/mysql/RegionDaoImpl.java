@@ -208,6 +208,11 @@ public class RegionDaoImpl implements RegionDao {
     }
 
     @Override
+    public int countSearch(String name) {
+        return 0;
+    }
+
+    @Override
     public List<Region> search(String name, int page) {
         int from = (page - 1) * 10;
         int to = page * 10;

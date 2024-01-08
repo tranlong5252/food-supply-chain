@@ -132,4 +132,17 @@ public class IndustrialStatusDaoImpl implements IndustrialStatusDao {
             return count;
         });
     }
+
+    @Override
+    public int countSearch(String name) {
+        return statement("SELECT * FROM status WHERE name LIKE CONCAT('%', ?, '%')", statement -> {
+            statement.setString(1, "%" + name + "%");
+            ResultSet resultSet = statement.executeQuery();
+            int count = 0;
+            while (resultSet.next()) {
+                count++;
+            }
+            return count;
+        });
+    }
 }

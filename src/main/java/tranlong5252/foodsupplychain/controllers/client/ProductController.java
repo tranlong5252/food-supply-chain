@@ -31,6 +31,7 @@ public class ProductController extends HttpServlet {
                     break;
                 default:
                     req.setAttribute("companies", ClientCompanyDao.getInstance().getListByPage(page));
+                    req.setAttribute("maxPage", ClientCompanyDao.getInstance().count() / 10 + 1);
                     break;
             }
 
