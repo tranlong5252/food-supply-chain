@@ -5,6 +5,7 @@ import tranlong5252.foodsupplychain.model.Account;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.text.Normalizer;
 
 public class Util {
     public static Account getAccount(HttpServletRequest req) {
@@ -21,5 +22,14 @@ public class Util {
             }
         }
         return account;
+    }
+
+    public static String flattenToAscii(String string) {
+        StringBuilder sb = new StringBuilder(string.length());
+        string = Normalizer.normalize(string, Normalizer.Form.NFD);
+        for (char c : string.toCharArray()) {
+            if (c <= '\u007F') sb.append(c);
+        }
+        return sb.toString();
     }
 }

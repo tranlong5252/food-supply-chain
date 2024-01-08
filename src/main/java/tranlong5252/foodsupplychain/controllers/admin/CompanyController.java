@@ -6,6 +6,8 @@ import tranlong5252.foodsupplychain.database.dao.RegionDao;
 import tranlong5252.foodsupplychain.model.Account;
 import tranlong5252.foodsupplychain.model.ClientCompany;
 import tranlong5252.foodsupplychain.model.Region;
+import tranlong5252.foodsupplychain.utils.Encryption;
+import tranlong5252.foodsupplychain.utils.Util;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,8 +20,8 @@ public class CompanyController extends HttpServlet {
     private void addClientCompany(HttpServletRequest req, HttpServletResponse resp) {
         // Nho try catch
         try {
-            String name = req.getParameter("companyName");
-            String tax = req.getParameter("companyTaxCode");
+            String name = req.getParameter("companyName").trim();
+            String tax = req.getParameter("companyTaxCode").trim();
             Region region;
             try {
                 region = RegionDao.getInstance().get(Integer.parseInt(req.getParameter("companyRegion")));
@@ -32,7 +34,20 @@ public class CompanyController extends HttpServlet {
                 return;
             }
 
-            String specification = req.getParameter("companySpecification");
+            String specification = req.getParameter("companySpecification").trim();
+
+            if (name.isBlank()) {
+                req.setAttribute("error", "Name is empty");
+                return;
+            }
+            if (tax.isBlank()) {
+                req.setAttribute("error", "Tax code is empty");
+                return;
+            }
+            if (specification.isBlank()) {
+                req.setAttribute("error", "Specification is empty");
+                return;
+            }
 
             ClientCompany company = new ClientCompany();
             company.setName(name);
@@ -50,8 +65,8 @@ public class CompanyController extends HttpServlet {
 
             Account account = new Account();
 
-            account.setUsername(accountName.concat("_" + id));
-            account.setPassword("123@@123");
+            account.setUsername(Util.flattenToAscii(accountName.concat("_" + id)));
+            account.setPassword(Encryption.encrypt(account.getUsername() + "_123@@123"));
             int accountId = AccountDao.getInstance().update(account);
             account.setId(accountId);
 
@@ -90,6 +105,10 @@ public class CompanyController extends HttpServlet {
         try {
             int id = Integer.parseInt(req.getParameter("companyId"));
             ClientCompany company = ClientCompanyDao.getInstance().get(id);
+            if (company == null) {
+                req.setAttribute("error","Company not found");
+                return;
+            }
             ClientCompanyDao.getInstance().delete(company);
         } catch (Exception e) {
             req.setAttribute("error", e.getMessage());

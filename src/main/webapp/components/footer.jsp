@@ -1,5 +1,8 @@
 <%--<div class="container my-5">--%>
 <%@ page contentType="text/html;charset=UTF-8" %>
+
+<br>
+<br>
 <footer class="bg-dark text-center text-lg-start text-white">
     <!-- Grid container -->
     <div class="container p-4">

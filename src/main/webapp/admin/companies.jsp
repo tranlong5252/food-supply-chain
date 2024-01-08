@@ -85,19 +85,19 @@
                             </td>
                             <td>
                                 <label>
-                                    <input class="form-control-plaintext" type="text" name="companyName" form="edit"
+                                    <input class="form-control-plaintext" type="text" name="companyName" form="edit_${company.id}"
                                            value="${company.name}">
                                 </label>
                             </td>
                             <td>
                                 <label>
-                                    <input class="form-control-plaintext" type="text" name="companyTaxCode" form="edit"
+                                    <input class="form-control-plaintext" type="text" name="companyTaxCode" form="edit_${company.id}"
                                            value="${company.taxCode}">
                                 </label>
                             </td>
                             <td>
                                 <label>
-                                    <select class="form-control-plaintext" name="companyRegion" form="edit" required>
+                                    <select class="form-control-plaintext" name="companyRegion" form="edit_${company.id}" required>
                                         <option value="">Choose region</option>
                                         <c:forEach items="${requestScope.regions}" var="region">
                                             <option ${region.id == company.region.id
@@ -112,7 +112,7 @@
                             <td>
                                 <label>
                                     <input class="form-control-plaintext" type="text" name="companySpecification"
-                                           form="edit"
+                                           form="edit_${company.id}"
                                            value="${company.specification}">
                                 </label>
                             </td>
@@ -125,7 +125,7 @@
                             <td>
                                 <div class="btn-group btn-group-sm" role="group">
                                     <button type="submit" class="btn btn-secondary" name="action"
-                                            form="edit"
+                                            form="edit_${company.id}"
                                             value="editCompany">Update
                                     </button>
                                     <button type="submit" class="btn btn-danger" name="action"
@@ -133,7 +133,7 @@
                                             value="deleteCompany">Delete
                                     </button>
                                 </div>
-                                <form action="Company" id="edit">
+                                <form action="Company" id="edit_${company.id}">
                                     <input type="hidden" name="companyId" value="${company.id}">
                                     <div class="input-group">
 

@@ -27,6 +27,10 @@ public class RegionController extends HttpServlet {
         // Nho try catch
         try {
             String name = req.getParameter("regionName");
+            if (name == null || name.isBlank()) {
+                req.setAttribute("error", "Name is empty");
+                return;
+            }
 
             double distribution = Double.parseDouble(req.getParameter("regionPopDis"));
             int migration = Integer.parseInt(req.getParameter("regionPopMig"));

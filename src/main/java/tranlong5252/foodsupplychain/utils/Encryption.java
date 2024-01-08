@@ -5,6 +5,10 @@ import java.security.NoSuchAlgorithmException;
 
 public class Encryption {
 
+    public static void main(String[] args) {
+        System.out.println(encrypt("123"));
+    }
+
     public static String encrypt(String string) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");

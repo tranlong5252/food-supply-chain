@@ -20,7 +20,7 @@ public class LoginController extends HttpServlet {
         HttpSession session = req.getSession();
         String username = req.getParameter("username");
         String password = req.getParameter("password");
-        Account account = AccountDao.getInstance().login(username, password);
+        Account account = AccountDao.getInstance().login(username, Encryption.encrypt(password));
         if (account != null) {
             Cookie cookie = new Cookie("accountId", String.valueOf(account.getId()));
             resp.addCookie(cookie);
