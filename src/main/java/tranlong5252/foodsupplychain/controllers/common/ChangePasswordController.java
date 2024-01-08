@@ -31,9 +31,6 @@ public class ChangePasswordController extends HttpServlet {
                 req.setAttribute("message", "Change password successfully");
             }
         }
-
-        
-            req.getRequestDispatcher("account.jsp").forward(req, resp);
-
+        req.getRequestDispatcher("account.jsp").forward(req, resp);
     }
 }

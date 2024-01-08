@@ -3,6 +3,7 @@ package tranlong5252.foodsupplychain.database.dao.impl.mysql;
 import tranlong5252.foodsupplychain.database.dao.AccountDao;
 import tranlong5252.foodsupplychain.database.dao.ClientCompanyDao;
 import tranlong5252.foodsupplychain.database.dao.RegionDao;
+import tranlong5252.foodsupplychain.model.Account;
 import tranlong5252.foodsupplychain.model.ClientCompany;
 
 import java.sql.ResultSet;
@@ -135,6 +136,21 @@ public class ClientCompanyDaoImpl implements ClientCompanyDao {
             statement.setInt(2, from);
             statement.setInt(3, to);
             return fetchRecords(statement, resultSet -> newCompany(
+                    resultSet.getInt("id"),
+                    resultSet.getString("name"),
+                    resultSet.getString("tax_code"),
+                    resultSet.getString("specification"),
+                    resultSet.getInt("region_id"),
+                    resultSet.getInt("account_id")
+            ));
+        });
+    }
+
+    @Override
+    public ClientCompany getByUser(Account account) {
+        return statement("SELECT * FROM client_company WHERE account_id = ?", statement -> {
+            statement.setInt(1, account.getId());
+            return fetch(statement, resultSet -> newCompany(
                     resultSet.getInt("id"),
                     resultSet.getString("name"),
                     resultSet.getString("tax_code"),

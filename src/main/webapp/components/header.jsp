@@ -19,7 +19,7 @@
           </li>
         </ul>
         <c:choose>
-          <c:when test="${cookie.accountId != null}">
+          <c:when test="${cookie.accountId != null && sessionScope.username != null}">
             <ul class="navbar-nav">
               <li class="nav-item">
                 <a class="nav-link" href="Account">Hi ${sessionScope.username}</a>

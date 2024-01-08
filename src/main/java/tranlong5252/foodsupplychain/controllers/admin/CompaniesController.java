@@ -38,6 +38,10 @@ public class CompaniesController extends HttpServlet {
             req.setAttribute("regions", regions);
 
             req.getRequestDispatcher("admin/companies.jsp").forward(req, resp);
+            return;
+        }
+        if (account != null && account.getRole() == 0) {
+            resp.sendRedirect("ClientCompany");
         } else {
             HttpSession session = req.getSession();
             session.setAttribute("redirect", "Companies");

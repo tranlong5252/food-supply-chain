@@ -1,6 +1,7 @@
 package tranlong5252.foodsupplychain.database.dao;
 
 import tranlong5252.foodsupplychain.database.DataAccess;
+import tranlong5252.foodsupplychain.model.Account;
 import tranlong5252.foodsupplychain.model.ClientCompany;
 
 import java.lang.reflect.InvocationTargetException;
@@ -19,4 +20,6 @@ public interface ClientCompanyDao extends DataAccess<ClientCompany> {
     }
 
     List<ClientCompany> search(String name, int page);
+
+    ClientCompany getByUser(Account account);
 }

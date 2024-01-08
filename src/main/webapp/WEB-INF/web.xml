@@ -92,6 +92,15 @@
         <url-pattern>/ChangePassword</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ClientCompanyController</servlet-name>
+        <servlet-class>tranlong5252.foodsupplychain.controllers.client.ClientCompanyController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ClientCompanyController</servlet-name>
+        <url-pattern>/ClientCompany</url-pattern>
+    </servlet-mapping>
+
     <filter>
         <filter-name>AuthFilter</filter-name>
         <filter-class>tranlong5252.foodsupplychain.filters.AuthFilter</filter-class>
