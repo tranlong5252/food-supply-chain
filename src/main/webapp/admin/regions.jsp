@@ -36,9 +36,11 @@
                     Reset
                 </button>
             </div>
+
         <form action="Regions" id ="filterRegions"></form>
         <div class="card">
             <p class="card-header">Filter</p>
+
             <div class="card-group">
                 <div class="card">
                     <p class="card-text">Population</p>
@@ -505,6 +507,7 @@
     </div>
 </div>
 </body>
+<%@include file="../components/footer.jsp"%>
 <script type="text/javascript">
     function selectRegion(id) {
         //check if select input in table cause accidentally select region

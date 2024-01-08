@@ -21,6 +21,7 @@
     <img class="img-fluid mx-auto d-block" src="https://i.pinimg.com/originals/0a/35/61/0a356142c7184ae283480e277bf81dda.gif" alt="">
 </div>
 
-<%@include file="components/footer.jsp"%>
 </body>
+
+<%@include file="components/footer.jsp"%>
 </html>

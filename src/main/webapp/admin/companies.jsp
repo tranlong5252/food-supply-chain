@@ -20,7 +20,7 @@
 
 <div class="container">
     <c:if test="${requestScope.error != null}">
-        <p>${requestScope.error}</p>
+        <p class="text-bg-warning">${requestScope.error}</p>
     </c:if>
     <div class="row">
         <div class="col">
@@ -71,7 +71,7 @@
                     <th scope="col">Name</th>
                     <th scope="col">Tax code</th>
                     <th scope="col">Region</th>
-                    <th scope="col">Industry/Agriculture</th>
+                    <th scope="col">Specification</th>
                     <th scope="col">Username</th>
                     <th scope="col">Action</th>
                 </tr>
@@ -129,7 +129,7 @@
                                             value="editCompany">Update
                                     </button>
                                     <button type="submit" class="btn btn-danger" name="action"
-                                            form="remove"
+                                            form="remove_${company.id}"
                                             value="deleteCompany">Delete
                                     </button>
                                 </div>
@@ -139,7 +139,7 @@
 
                                     </div>
                                 </form>
-                                <form action="Company" id="remove">
+                                <form action="Company" id="remove_${company.id}">
                                     <input type="hidden" name="companyId" value="${company.id}">
                                     <div class="input-group">
                                     </div>
@@ -155,12 +155,12 @@
                     </td>
                     <td>
                         <label>
-                            <input class="form-control-plaintext" type="text" name="companyName" form="add" placeholder="Enter name">
+                            <input class="form-control-plaintext" type="text" name="companyName" form="add" placeholder="Enter name" required>
                         </label>
                     </td>
                     <td>
                         <label>
-                            <input class="form-control-plaintext" type="text" name="companyTaxCode" form="add" placeholder="Enter Tax code">
+                            <input class="form-control-plaintext" type="text" name="companyTaxCode" form="add" placeholder="Enter Tax code" required>
                         </label>
                     </td>
                     <td>
@@ -174,7 +174,7 @@
                     </td>
                     <td>
                         <label>
-                            <input class="form-control-plaintext" type="text" name="companySpecification" form="add" placeholder="Type">
+                            <input class="form-control-plaintext" type="text" name="companySpecification" form="add" placeholder="Type" required>
                         </label>
                     </td>
                     <td></td>
@@ -193,4 +193,5 @@
 </div>
 <form action="Company" id="add"></form>
 </body>
+<%@include file="../components/footer.jsp"%>
 </html>
