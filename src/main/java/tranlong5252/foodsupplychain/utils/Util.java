@@ -5,6 +5,7 @@ import tranlong5252.foodsupplychain.model.Account;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.Normalizer;
 
 public class Util {
@@ -20,6 +21,10 @@ public class Util {
                 account = AccountDao.getInstance().get(id);
                 break;
             }
+        }
+        HttpSession session = req.getSession();
+        if (session.getAttribute("username") == null) {
+            return null;
         }
         return account;
     }
