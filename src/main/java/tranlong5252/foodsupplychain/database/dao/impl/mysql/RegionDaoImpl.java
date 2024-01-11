@@ -175,7 +175,8 @@ public class RegionDaoImpl implements RegionDao {
     @Override
     public void delete(Region region) throws SQLException {
         //check if regions has company assigned
-        var check = statement("SELECT * FROM client_company WHERE region_id = ?", statement -> {
+        String checkStm = "SELECT * FROM company_region WHERE region_id = ?";
+        var check = statement(checkStm, statement -> {
             statement.setInt(1, region.getId());
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {

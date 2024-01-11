@@ -50,7 +50,8 @@ public class ClientCompanyController extends HttpServlet {
                 ClientCompany clientCompany = ClientCompanyDao.getInstance().getByUser(account);
                 clientCompany.setName(req.getParameter("name"));
                 clientCompany.setTaxCode(req.getParameter("taxCode"));
-                clientCompany.setRegion(RegionDao.getInstance().get(Integer.parseInt(req.getParameter("region"))));
+                Region region = RegionDao.getInstance().get(Integer.parseInt(req.getParameter("region")));
+                clientCompany.setRegion(region);
                 clientCompany.setSpecification(req.getParameter("specification"));
                 //clientCompany.setRegion(req.getParameter("specification"));
                 ClientCompanyDao.getInstance().update(clientCompany);

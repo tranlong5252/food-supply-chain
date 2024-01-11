@@ -26,7 +26,15 @@ public class ClientCompanyDaoImpl implements ClientCompanyDao {
 
     @Override
     public List<ClientCompany> getList() {
-        return statement("SELECT * FROM client_company",
+        String stm = """
+                SELECT id,name,tax_code,specification,account_id,region_id
+                FROM client_company
+                    JOIN client_account ac
+                        ON client_company.id = ac.company_id
+                    LEFT OUTER JOIN food_supply_chain.company_region cr
+                        ON client_company.id = cr.company_id
+                """;
+        return statement(stm,
                 statement -> fetchRecords(statement, resultSet -> newCompany(
                         resultSet.getInt("id"),
                         resultSet.getString("name"),
@@ -42,7 +50,16 @@ public class ClientCompanyDaoImpl implements ClientCompanyDao {
     public List<ClientCompany> getListByPage(int page) {
         int from = (page - 1) * 10;
         int to = page * 10;
-        return statement("SELECT * FROM client_company LIMIT ?, ?", statement -> {
+        String stm = """
+                SELECT id,name,tax_code,specification,account_id,region_id
+                FROM client_company
+                    JOIN client_account ac
+                        ON client_company.id = ac.company_id
+                    LEFT OUTER JOIN food_supply_chain.company_region cr
+                        ON client_company.id = cr.company_id
+                LIMIT ?, ?
+                """;
+        return statement(stm, statement -> {
             statement.setInt(1, from);
             statement.setInt(2, to);
             return fetchRecords(statement, resultSet -> newCompany(
@@ -58,7 +75,16 @@ public class ClientCompanyDaoImpl implements ClientCompanyDao {
 
     @Override
     public ClientCompany get(int id) {
-        return statement("SELECT * FROM client_company WHERE id = ?", statement -> {
+        String stm = """
+                SELECT id,name,tax_code,specification,account_id,region_id
+                FROM client_company
+                    JOIN client_account ac
+                        ON client_company.id = ac.company_id
+                    LEFT OUTER JOIN food_supply_chain.company_region cr
+                        ON client_company.id = cr.company_id
+                WHERE id = ?
+                """;
+        return statement(stm, statement -> {
             statement.setInt(1, id);
             return fetch(statement, resultSet -> newCompany(
                     resultSet.getInt("id"),
@@ -74,32 +100,94 @@ public class ClientCompanyDaoImpl implements ClientCompanyDao {
     @Override
     public int update(ClientCompany company) {
         if (company.getId() != 0) {
-            statement("UPDATE client_company SET name = ?, tax_code = ?, specification = ?, region_id = ?, account_id = ? WHERE id = ?", statement -> {
+            String stm = "UPDATE client_company SET name = ?, tax_code = ?, specification = ? WHERE id = ?";
+            statement(stm, statement -> {
                 statement.setString(1, company.getName());
                 statement.setString(2, company.getTaxCode());
                 statement.setString(3, company.getSpecification());
-                statement.setInt(4, company.getRegion().getId());
-                statement.setInt(5, company.getAccount().getId());
-                statement.setInt(6, company.getId());
+                statement.setInt(4, company.getId());
                 return statement.executeUpdate();
             });
+            if (company.getRegion() != null) {
+                String regionStm = "INSERT INTO company_region (company_id, region_id) VALUES (?, ?) ON DUPLICATE KEY UPDATE region_id = ?";
+                statement(regionStm, statement -> {
+                    statement.setInt(1, company.getId());
+                    statement.setInt(2, company.getRegion().getId());
+                    statement.setInt(3, company.getRegion().getId());
+                    return statement.executeUpdate();
+                });
+            }
+            if (company.getAccount() != null) {
+                String accountStm = "INSERT INTO client_account (company_id, account_id) VALUES (?, ?) ON DUPLICATE KEY UPDATE account_id = ?";
+                statement(accountStm, statement -> {
+                    statement.setInt(1, company.getId());
+                    statement.setInt(2, company.getAccount().getId());
+                    statement.setInt(3, company.getAccount().getId());
+                    return statement.executeUpdate();
+                });
+            }
             return company.getId();
         }
-        return statementWithKey("INSERT INTO client_company (name, tax_code, region_id, specification) VALUES (?, ?, ?, ?)", statement -> {
+        String companyStm = """
+                INSERT INTO client_company (name, tax_code, specification)
+                VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE name = ?, tax_code = ?, specification = ?
+                """;
+        int key = statementWithKey(companyStm, statement -> {
             statement.setString(1, company.getName());
             statement.setString(2, company.getTaxCode());
             statement.setInt(3, company.getRegion().getId());
             statement.setString(4, company.getSpecification());
+            statement.setString(5, company.getName());
+            statement.setString(6, company.getTaxCode());
+            statement.setString(7, company.getSpecification());
             statement.executeUpdate();
             ResultSet generatedKeysResultSet = statement.getGeneratedKeys();
             generatedKeysResultSet.next();
             return generatedKeysResultSet.getInt(1);
         });
+        if (company.getRegion() != null) {
+            String regionStm = """
+                    INSERT INTO company_region (company_id, region_id)
+                    VALUES (?, ?) ON DUPLICATE KEY UPDATE region_id = ?
+                    """;
+            statement(regionStm, statement -> {
+                statement.setInt(1, key);
+                statement.setInt(2, company.getRegion().getId());
+                statement.setInt(3, company.getRegion().getId());
+                return statement.executeUpdate();
+            });
+        }
+        if (company.getAccount() != null) {
+            String accountStm = """
+                    INSERT INTO client_account (company_id, account_id)
+                    VALUES (?, ?) ON DUPLICATE KEY UPDATE account_id = ?
+                    """;
+            statement(accountStm, statement -> {
+                statement.setInt(1, key);
+                statement.setInt(2, company.getAccount().getId());
+                statement.setInt(3, company.getAccount().getId());
+                return statement.executeUpdate();
+            });
+        }
+        return key;
     }
 
     @Override
     public void delete(ClientCompany company) throws SQLException {
-        statement("DELETE FROM client_company WHERE id = ?", statement -> {
+        String regionStm = "DELETE FROM company_region WHERE company_id = ?";
+        statement(regionStm, statement -> {
+            statement.setInt(1, company.getId());
+            statement.executeUpdate();
+            return null;
+        });
+        String accountStm = "DELETE FROM client_account WHERE company_id = ?";
+        statement(accountStm, statement -> {
+            statement.setInt(1, company.getId());
+            statement.executeUpdate();
+            return null;
+        });
+        String stm = "DELETE FROM client_company WHERE id = ?";
+        statement(stm, statement -> {
             statement.setInt(1, company.getId());
             statement.executeUpdate();
             return null;
@@ -130,7 +218,16 @@ public class ClientCompanyDaoImpl implements ClientCompanyDao {
     public List<ClientCompany> search(String name, int page) {
         int from = (page - 1) * 10;
         int to = page * 10;
-        String stm = "SELECT * FROM client_company WHERE name LIKE CONCAT('%', ?, '%') LIMIT ?, ?";
+        String stm = """
+                SELECT id,name,tax_code,specification,account_id,region_id
+                FROM client_company
+                    JOIN client_account ac
+                        ON client_company.id = ac.company_id
+                    LEFT OUTER JOIN food_supply_chain.company_region cr
+                        ON client_company.id = cr.company_id
+                WHERE name LIKE CONCAT('%', ?, '%')
+                LIMIT ?, ?
+                """;
         return statement(stm, statement -> {
             statement.setString(1, name);
             statement.setInt(2, from);
@@ -148,7 +245,16 @@ public class ClientCompanyDaoImpl implements ClientCompanyDao {
 
     @Override
     public ClientCompany getByUser(Account account) {
-        return statement("SELECT * FROM client_company WHERE account_id = ?", statement -> {
+        String stm = """
+                SELECT id,name,tax_code,specification,account_id,region_id
+                FROM client_company
+                    JOIN client_account ac
+                        ON client_company.id = ac.company_id
+                    LEFT OUTER JOIN food_supply_chain.company_region cr
+                        ON client_company.id = cr.company_id
+                WHERE account_id = ?
+                """;
+        return statement(stm, statement -> {
             statement.setInt(1, account.getId());
             return fetch(statement, resultSet -> newCompany(
                     resultSet.getInt("id"),

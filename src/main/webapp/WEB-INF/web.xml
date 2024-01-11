@@ -27,7 +27,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>ProductsController</servlet-name>
-        <servlet-class>tranlong5252.foodsupplychain.controllers.client.ProductsController</servlet-class>
+        <servlet-class>tranlong5252.foodsupplychain.controllers.common.ProductsController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ProductsController</servlet-name>
