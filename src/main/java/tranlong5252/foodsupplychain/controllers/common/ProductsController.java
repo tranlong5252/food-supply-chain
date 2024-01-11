@@ -1,9 +1,7 @@
-package tranlong5252.foodsupplychain.controllers.client;
+package tranlong5252.foodsupplychain.controllers.common;
 
-import tranlong5252.foodsupplychain.database.dao.ClientCompanyDao;
-import tranlong5252.foodsupplychain.database.dao.RegionDao;
+import tranlong5252.foodsupplychain.database.dao.ProductDao;
 import tranlong5252.foodsupplychain.model.Account;
-import tranlong5252.foodsupplychain.model.Region;
 import tranlong5252.foodsupplychain.utils.Util;
 
 import javax.servlet.ServletException;
@@ -12,9 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 
-public class ProductController extends HttpServlet {
+public class ProductsController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -26,22 +23,18 @@ public class ProductController extends HttpServlet {
 
             String action = req.getParameter("action");
             switch (action != null ? action : "") {
-                case "searchCompanies":
+                case "searchProducts":
                     //searchCompanies(req, resp);
                     break;
                 default:
-                    req.setAttribute("companies", ClientCompanyDao.getInstance().getListByPage(page));
-                    req.setAttribute("maxPage", ClientCompanyDao.getInstance().count() / 10 + 1);
+                    req.setAttribute("products", ProductDao.getInstance().getListByPage(page));
                     break;
             }
-
-            List<Region> regions = RegionDao.getInstance().getList();
-            req.setAttribute("regions", regions);
-
-            req.getRequestDispatcher("admin/companies.jsp").forward(req, resp);
+            String role = account.getRole() == 0 ? "client" : "admin";
+            req.getRequestDispatcher(role+"/products.jsp").forward(req, resp);
         } else {
             HttpSession session = req.getSession();
-            session.setAttribute("redirect", "Companies");
+            session.setAttribute("redirect", "Products");
             resp.sendRedirect("Login");
         }
     }
@@ -56,7 +49,7 @@ public class ProductController extends HttpServlet {
     }
 
     private int getMaxPage() {
-        int count = RegionDao.getInstance().count();
+        int count = ProductDao.getInstance().count();
         return count / 10 + (count % 10 == 0 ? 0 : 1);
     }
 }

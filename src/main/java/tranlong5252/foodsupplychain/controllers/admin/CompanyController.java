@@ -117,6 +117,16 @@ public class CompanyController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Account account = Util.getAccount(req);
+        if (account == null) {
+            req.getSession().setAttribute("redirect", "Companies");
+            resp.sendRedirect("Login");
+            return;
+        }
+        if (account.getRole() == 0) {
+            resp.sendRedirect("Companies");
+            return;
+        }
         String action = req.getParameter("action");
         switch (action) {
             case "addCompany" -> addClientCompany(req, resp);

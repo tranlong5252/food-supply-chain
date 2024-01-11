@@ -15,18 +15,20 @@
             <h3>Company information</h3>
         </div>
         <div class="card-body">
-            <form action="ClientCompany" method="post" id="updateCompany">
+            <form action="ClientCompany" method="post" id="updateCompany"></form>
                 <label class="col-sm-2" for="name">Company Name:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="name" placeholder="Enter company name" name="name" value="${requestScope.company.name}" required>
+                    <input type="text" class="form-control" id="name" placeholder="Enter company name" name="name"
+                           value="${requestScope.company.name}" required form="updateCompany">
                 </div>
                 <label class="col-sm-2" for="taxCode">Tax code:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="taxCode" placeholder="Enter tax code" name="taxCode" value="${requestScope.company.taxCode}" required>
+                    <input type="text" class="form-control" id="taxCode" placeholder="Enter tax code" name="taxCode"
+                           value="${requestScope.company.taxCode}" required form="updateCompany">
                 </div>
                 <label class="col-sm-2" for="Region">Region:</label>
                 <div class="col-sm-10">
-                    <select id="Region" class="form-select" required name="region">
+                    <select id="Region" class="form-select" required name="region" disabled>
                         <option value="">Choose region</option>
                         <c:forEach items="${requestScope.regions}" var="region">
                             <option ${region.id == requestScope.company.region.id
@@ -39,9 +41,10 @@
                 </div>
                 <label class="col-sm-2" for="specification">Specification:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="specification" placeholder="Enter specification" name="specification" value="${requestScope.company.specification}" required>
+                    <input type="text" class="form-control" id="specification" placeholder="Enter specification"
+                           name="specification" value="${requestScope.company.specification}" required
+                           form="updateCompany">
                 </div>
-            </form>
         </div>
         <div class="card-footer">
             <div class="col-sm-10">

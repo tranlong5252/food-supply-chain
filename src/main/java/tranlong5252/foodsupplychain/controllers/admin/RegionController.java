@@ -3,11 +3,13 @@ package tranlong5252.foodsupplychain.controllers.admin;
 import tranlong5252.foodsupplychain.constants.StatusLevel;
 import tranlong5252.foodsupplychain.database.dao.IndustrialStatusDao;
 import tranlong5252.foodsupplychain.database.dao.RegionDao;
+import tranlong5252.foodsupplychain.model.Account;
 import tranlong5252.foodsupplychain.model.IndustrialAgriculturalStatus;
 import tranlong5252.foodsupplychain.model.NatureStatus;
 import tranlong5252.foodsupplychain.model.Population;
 import tranlong5252.foodsupplychain.model.Region;
 import tranlong5252.foodsupplychain.model.StatusList;
+import tranlong5252.foodsupplychain.utils.Util;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -195,6 +197,16 @@ public class RegionController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Account account = Util.getAccount(req);
+        if (account == null) {
+            req.getSession().setAttribute("redirect", "Regions");
+            resp.sendRedirect("Login");
+            return;
+        }
+        if (account.getRole() == 0) {
+            resp.sendRedirect("Regions");
+            return;
+        }
         String action = req.getParameter("action");
         switch (action != null ? action : "") {
             case "addRegion":

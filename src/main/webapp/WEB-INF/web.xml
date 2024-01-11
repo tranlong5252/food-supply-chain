@@ -34,12 +34,12 @@
         <url-pattern>/Products</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>CartController</servlet-name>
-        <servlet-class>tranlong5252.foodsupplychain.controllers.client.CartController</servlet-class>
+        <servlet-name>ProductController</servlet-name>
+        <servlet-class>tranlong5252.foodsupplychain.controllers.common.ProductController</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>CartController</servlet-name>
-        <url-pattern>/Cart</url-pattern>
+        <servlet-name>ProductController</servlet-name>
+        <url-pattern>/Product</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>CompaniesController</servlet-name>

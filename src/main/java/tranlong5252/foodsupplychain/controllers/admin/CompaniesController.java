@@ -49,7 +49,7 @@ public class CompaniesController extends HttpServlet {
         }
     }
 
-    private void searchCompanies(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void searchCompanies(HttpServletRequest req, HttpServletResponse resp) {
         String name = req.getParameter("companyName");
         req.setAttribute("companies", ClientCompanyDao.getInstance().search(name, getPage(req)));
         req.setAttribute("maxPage", ClientCompanyDao.getInstance().countSearch(name) / 10 + 1);

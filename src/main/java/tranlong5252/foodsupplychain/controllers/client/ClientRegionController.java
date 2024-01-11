@@ -16,26 +16,26 @@ public class ClientRegionController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //try {
-        Account account = Util.getAccount(req);
-        if (account == null) {
-            HttpSession session = req.getSession();
-            session.setAttribute("redirect", "Regions");
-            resp.sendRedirect("Login");
-            return;
-        }
-        if (account.getRole() == 1) {
-            resp.sendRedirect("Regions");
-            return;
-        }
+        try {
+            Account account = Util.getAccount(req);
+            if (account == null) {
+                HttpSession session = req.getSession();
+                session.setAttribute("redirect", "Regions");
+                resp.sendRedirect("Login");
+                return;
+            }
+            if (account.getRole() == 1) {
+                resp.sendRedirect("Regions");
+                return;
+            }
 
-        ClientCompany clientCompany = ClientCompanyDao.getInstance().getByUser(account);
-        req.setAttribute("company", clientCompany);
-        req.setAttribute("region", clientCompany.getRegion());
-        req.getRequestDispatcher("client/region.jsp").forward(req, resp);
-        //} catch (Exception e) {
-        //    req.setAttribute("error", e.getMessage());
-        //}
+            ClientCompany clientCompany = ClientCompanyDao.getInstance().getByUser(account);
+            req.setAttribute("company", clientCompany);
+            req.setAttribute("region", clientCompany.getRegion());
+            req.getRequestDispatcher("client/region.jsp").forward(req, resp);
+        } catch (Exception e) {
+            req.setAttribute("error", e.getMessage());
+        }
     }
 }
 

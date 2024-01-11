@@ -17,7 +17,17 @@ import java.util.List;
 
 public class ClientCompanyController extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        Account account = Util.getAccount(req);
+        if (account == null) {
+            req.getSession().setAttribute("redirect", "Companies");
+            resp.sendRedirect("Login");
+            return;
+        }
+        if (account.getRole() == 1) {
+            resp.sendRedirect("Companies");
+            return;
+        }
         String action = req.getParameter("action");
         if ((action != null ? action : "").equals("updateCompany")) {
             if (editClientCompany(req, resp)) {
@@ -50,8 +60,9 @@ public class ClientCompanyController extends HttpServlet {
                 ClientCompany clientCompany = ClientCompanyDao.getInstance().getByUser(account);
                 clientCompany.setName(req.getParameter("name"));
                 clientCompany.setTaxCode(req.getParameter("taxCode"));
-                Region region = RegionDao.getInstance().get(Integer.parseInt(req.getParameter("region")));
-                clientCompany.setRegion(region);
+                //do not change region by user
+                //Region region = RegionDao.getInstance().get(Integer.parseInt(req.getParameter("region")));
+                //clientCompany.setRegion(region);
                 clientCompany.setSpecification(req.getParameter("specification"));
                 //clientCompany.setRegion(req.getParameter("specification"));
                 ClientCompanyDao.getInstance().update(clientCompany);
