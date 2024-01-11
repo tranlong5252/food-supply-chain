@@ -15,9 +15,7 @@
 <%@include file="../components/header.jsp"%>
 
 <div class="container">
-    <c:if test="${requestScope.error != null}">
-        <p class="text-bg-warning">${requestScope.error}</p>
-    </c:if>
+    <%@include file="../components/message.jsp"%>
     <div class="row">
         <div class="col">
             <h2>Client companies management</h2>

@@ -13,9 +13,7 @@
 <%@include file="../components/header.jsp"%>
 
 <div class="container">
-    <c:if test="${requestScope.error != null}">
-        <p class="text-bg-warning">${requestScope.error}</p>
-    </c:if>
+    <%@include file="../components/message.jsp"%>
 
     <h1>Regions management</h1>
     <div class="find-object">

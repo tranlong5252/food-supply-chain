@@ -110,4 +110,24 @@
         <filter-name>AuthFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+    <filter>
+        <filter-name>CharsetFilter</filter-name>
+        <filter-class>tranlong5252.foodsupplychain.filters.CharsetFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>CharsetFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <servlet>
+        <servlet-name>ClientRegionController</servlet-name>
+        <servlet-class>tranlong5252.foodsupplychain.controllers.client.ClientRegionController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ClientRegionController</servlet-name>
+        <url-pattern>/ClientRegion</url-pattern>
+    </servlet-mapping>
 </web-app>

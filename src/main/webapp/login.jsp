@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,9 +17,7 @@
                 <div class="card-header">
                     <h3>Login</h3>
                 </div>
-                <c:if test="${requestScope.error != null}">
-                    <p class="text-bg-danger text-center">${requestScope.error}</p>
-                </c:if>
+                <%@include file="components/message.jsp"%>
                 <div class="card-body">
 
                     <form method="POST" id="login"></form>

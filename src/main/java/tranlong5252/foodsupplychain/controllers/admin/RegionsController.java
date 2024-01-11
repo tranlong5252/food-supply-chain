@@ -54,7 +54,9 @@ public class RegionsController extends HttpServlet {
                     req.getRequestDispatcher("admin/regions.jsp").forward(req, resp);
                     break;
             }
-
+        }
+        if (account != null && account.getRole() == 0) {
+            resp.sendRedirect("ClientRegion");
         } else {
             HttpSession session = req.getSession();
             session.setAttribute("redirect", "Regions");

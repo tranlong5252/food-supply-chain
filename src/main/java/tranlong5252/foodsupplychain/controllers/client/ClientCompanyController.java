@@ -1,8 +1,10 @@
 package tranlong5252.foodsupplychain.controllers.client;
 
 import tranlong5252.foodsupplychain.database.dao.ClientCompanyDao;
+import tranlong5252.foodsupplychain.database.dao.RegionDao;
 import tranlong5252.foodsupplychain.model.Account;
 import tranlong5252.foodsupplychain.model.ClientCompany;
+import tranlong5252.foodsupplychain.model.Region;
 import tranlong5252.foodsupplychain.utils.Util;
 
 import javax.servlet.ServletException;
@@ -11,61 +13,76 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 public class ClientCompanyController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
-        switch (action != null ? action : "") {
-            case "updateCompany":
-                editClientCompany(req, resp);
-                break;
+        if ((action != null ? action : "").equals("updateCompany")) {
+            if (editClientCompany(req, resp)) {
+                req.setAttribute("message", "Updated company information!");
+                List<Region> regions = RegionDao.getInstance().getList();
+                req.setAttribute("regions", regions);
+            }
         }
-        resp.sendRedirect("ClientCompany");
+        try {
+            req.getRequestDispatcher("client/company.jsp").forward(req, resp);
+        } catch (Exception e) {
+            resp.sendRedirect("ClientCompany");
+        }
     }
 
-    private void editClientCompany(HttpServletRequest req, HttpServletResponse resp) {
+    private boolean editClientCompany(HttpServletRequest req, HttpServletResponse resp) {
         try {
             Account account = Util.getAccount(req);
-            if (account != null && account.getRole() == 0) {
+            if (account == null) {
+                HttpSession session = req.getSession();
+                session.setAttribute("redirect", "Companies");
+                resp.sendRedirect("Login");
+                return false;
+            }
+            if (account.getRole() == 1) {
+                resp.sendRedirect("Companies");
+                return false;
+            }
+            if (account.getRole() == 0) {
                 ClientCompany clientCompany = ClientCompanyDao.getInstance().getByUser(account);
                 clientCompany.setName(req.getParameter("name"));
                 clientCompany.setTaxCode(req.getParameter("taxCode"));
+                clientCompany.setRegion(RegionDao.getInstance().get(Integer.parseInt(req.getParameter("region"))));
                 clientCompany.setSpecification(req.getParameter("specification"));
                 //clientCompany.setRegion(req.getParameter("specification"));
                 ClientCompanyDao.getInstance().update(clientCompany);
                 req.setAttribute("company", clientCompany);
-                return;
-            }
-            if (account != null && account.getRole() == 1) {
-                resp.sendRedirect("Companies");
-            }
-            else {
-                HttpSession session = req.getSession();
-                session.setAttribute("redirect", "Companies");
-                resp.sendRedirect("Login");
+                return true;
             }
         } catch (Exception e) {
             req.setAttribute("error", e.getMessage());
         }
+        return false;
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
             Account account = Util.getAccount(req);
-            if (account != null && account.getRole() == 1) {
-                resp.sendRedirect("Companies");
-            }
-            if (account != null && account.getRole() == 0) {
-                ClientCompany clientCompany = ClientCompanyDao.getInstance().getByUser(account);
-                req.setAttribute("company", clientCompany);
-                req.getRequestDispatcher("client/company.jsp").forward(req, resp);
-            } else {
+            if (account == null) {
                 HttpSession session = req.getSession();
                 session.setAttribute("redirect", "Companies");
                 resp.sendRedirect("Login");
+                return;
             }
+            if (account.getRole() == 1) {
+                resp.sendRedirect("Companies");
+                return;
+            }
+
+            ClientCompany clientCompany = ClientCompanyDao.getInstance().getByUser(account);
+            req.setAttribute("company", clientCompany);
+            List<Region> regions = RegionDao.getInstance().getList();
+            req.setAttribute("regions", regions);
+            req.getRequestDispatcher("client/company.jsp").forward(req, resp);
         } catch (Exception e) {
             req.setAttribute("error", e.getMessage());
         }

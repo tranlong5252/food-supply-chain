@@ -1,5 +1,5 @@
 <%--<div class="container my-5">--%>
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <br>
 <br>

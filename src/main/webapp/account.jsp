@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
 <html lang="en">
@@ -11,46 +11,43 @@
 <%@include file="components/header.jsp"%>
 
 <div class="container">
-    <c:if test="${requestScope.error != null}">
-        <p class="text-bg-warning">${requestScope.error}</p>
-    </c:if>
-    <c:if test="${requestScope.message != null}">
-        <p class="text-bg-success">${requestScope.message}</p>
-    </c:if>
+    <%@include file="components/message.jsp"%>
     <div class="card">
         <div class="card-header">
             <h1>Change Password for ${sessionScope.username}</h1>
         </div>
-        <form action="ChangePassword" method="post">
-            <label for="old_password" class="form-label">Old Password</label>
-            <div class="input-group mb-3">
-                <input type="password" class="form-control" id="old_password" name="old_password" required>
-                <span class="input-group-text" id="show_hide_old_password">
+        <div class="card-body">
+            <form action="ChangePassword" method="post">
+                <label for="old_password" class="form-label">Old Password</label>
+                <div class="input-group mb-3">
+                    <input type="password" class="form-control" id="old_password" name="old_password" required>
+                    <span class="input-group-text" id="show_hide_old_password">
                             <i>
                                 <a href="" class="fa fa-eye-slash old_password" aria-hidden=true style="text-decoration:none"></a>
                             </i>
                         </span>
-            </div>
-            <label for="new_password" class="form-label">New Password</label>
-            <div class="input-group mb-3">
-                <input type="password" class="form-control" id="new_password" name="new_password" required>
-                <span class="input-group-text" id="show_hide_new_password">
+                </div>
+                <label for="new_password" class="form-label">New Password</label>
+                <div class="input-group mb-3">
+                    <input type="password" class="form-control" id="new_password" name="new_password" required>
+                    <span class="input-group-text" id="show_hide_new_password">
                             <i>
                                 <a href="" class="fa fa-eye-slash new_password" aria-hidden=true style="text-decoration:none"></a>
                             </i>
                         </span>
-            </div>
-            <label for="new_confirm_password" class="form-label">Confirm Password</label>
-            <div class="input-group mb-3">
-                <input type="password" class="form-control" id="new_confirm_password" name="new_confirm_password" required>
-                <span class="input-group-text" id="show_hide_new_confirm_password">
+                </div>
+                <label for="new_confirm_password" class="form-label">Confirm Password</label>
+                <div class="input-group mb-3">
+                    <input type="password" class="form-control" id="new_confirm_password" name="new_confirm_password" required>
+                    <span class="input-group-text" id="show_hide_new_confirm_password">
                             <i>
                                 <a href="" class="fa fa-eye-slash new_confirm_password" aria-hidden=true style="text-decoration:none"></a>
                             </i>
                         </span>
-            </div>
-            <button type="submit" class="btn btn-primary">Change Password</button>
-        </form>
+                </div>
+                <button type="submit" class="btn btn-primary">Change Password</button>
+            </form>
+        </div>
     </div>
 </div>
 </body>
