@@ -1,8 +1,8 @@
 package tranlong5252.foodsupplychain.model;
 
 public class CartProduct {
-    private int id;
     private final Product product;
+    private int id;
     private int quantity;
     private double subtotal;
 

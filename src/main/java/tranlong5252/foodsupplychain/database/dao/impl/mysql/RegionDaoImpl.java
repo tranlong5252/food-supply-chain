@@ -180,7 +180,7 @@ public class RegionDaoImpl implements RegionDao {
             statement.setInt(1, region.getId());
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-               return 1;
+                return 1;
             }
             return 0;
         });

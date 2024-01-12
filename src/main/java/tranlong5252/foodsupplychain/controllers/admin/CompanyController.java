@@ -106,7 +106,7 @@ public class CompanyController extends HttpServlet {
             int id = Integer.parseInt(req.getParameter("companyId"));
             ClientCompany company = ClientCompanyDao.getInstance().get(id);
             if (company == null) {
-                req.setAttribute("error","Company not found");
+                req.setAttribute("error", "Company not found");
                 return;
             }
             ClientCompanyDao.getInstance().delete(company);

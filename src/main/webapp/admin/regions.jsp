@@ -6,31 +6,33 @@
 <head>
     <title>Supreme Logics Co</title>
 
-    <%@include file="../components/providers.jsp"%>
+    <%@include file="../components/providers.jsp" %>
     <%--    <link rel="stylesheet" href="css/table.css">--%>
 </head>
 <body>
-<%@include file="../components/header.jsp"%>
+<%@include file="../components/header.jsp" %>
 
 <div class="container">
-    <%@include file="../components/message.jsp"%>
+    <%@include file="../components/message.jsp" %>
 
     <h1>Regions management</h1>
     <div class="find-object">
         <form action="Regions" id="searchRegions"></form>
-            <div class="input-group">
-                <label>
-                    <input type="text" name="regionName" placeholder="Find by name" form="searchRegions">
-                </label>
-                <button type="submit" class="btn btn-sm btn-secondary" name="action" value="searchRegions" form="searchRegions">
-                    Search
-                </button>
-                <button type="submit" class="btn btn-sm btn-outline-secondary" form="resetRegions" name="action" value="resetRegions">
-                    Reset
-                </button>
-            </div>
+        <div class="input-group">
+            <label>
+                <input type="text" name="regionName" placeholder="Find by name" form="searchRegions">
+            </label>
+            <button type="submit" class="btn btn-sm btn-secondary" name="action" value="searchRegions"
+                    form="searchRegions">
+                Search
+            </button>
+            <button type="submit" class="btn btn-sm btn-outline-secondary" form="resetRegions" name="action"
+                    value="resetRegions">
+                Reset
+            </button>
+        </div>
 
-        <form action="Regions" id ="filterRegions"></form>
+        <form action="Regions" id="filterRegions"></form>
         <div class="card">
             <p class="card-header">Filter</p>
 
@@ -41,14 +43,16 @@
                         <div class="card">
                             <p class="card-text">Distribution</p>
                             <label>
-                                <input type="number" name="regionPopDisMin" placeholder="From" min="0" form="filterRegions"
+                                <input type="number" name="regionPopDisMin" placeholder="From" min="0"
+                                       form="filterRegions"
                                 <c:if test="${requestScope.regionPopDisMin != null}">
                                        value="${requestScope.regionPopDisMin}"
                                 </c:if>
                                 >
                             </label>
                             <label>
-                                <input type="number" name="regionPopDisMax" placeholder="To" min="0" form="filterRegions"
+                                <input type="number" name="regionPopDisMax" placeholder="To" min="0"
+                                       form="filterRegions"
                                 <c:if test="${requestScope.regionPopDisMax != null}">
                                        value="${requestScope.regionPopDisMax}"
                                 </c:if>
@@ -58,14 +62,16 @@
                         <div class="card">
                             <p class="card-text">Migration</p>
                             <label>
-                                <input type="number" name="regionPopMigMin" placeholder="From" min="0" max="10" form="filterRegions"
+                                <input type="number" name="regionPopMigMin" placeholder="From" min="0" max="10"
+                                       form="filterRegions"
                                 <c:if test="${requestScope.regionPopMigMin != null}">
                                        value="${requestScope.regionPopMigMin}"
                                 </c:if>
                                 >
                             </label>
                             <label>
-                                <input type="number" name="regionPopMigMax" placeholder="To" min="0" max="10" form="filterRegions"
+                                <input type="number" name="regionPopMigMax" placeholder="To" min="0" max="10"
+                                       form="filterRegions"
                                 <c:if test="${requestScope.regionPopMigMax != null}">
                                        value="${requestScope.regionPopMigMax}"
                                 </c:if>
@@ -75,14 +81,16 @@
                         <div class="card">
                             <p class="card-text">Urbanization</p>
                             <label>
-                                <input type="number" name="regionPopUrbMin" placeholder="From" min="0" max="10" form="filterRegions"
+                                <input type="number" name="regionPopUrbMin" placeholder="From" min="0" max="10"
+                                       form="filterRegions"
                                 <c:if test="${requestScope.regionPopUrbMin != null}">
                                        value="${requestScope.regionPopUrbMin}"
                                 </c:if>
                                 >
                             </label>
                             <label>
-                                <input type="number" name="regionPopUrbMax" placeholder="To" min="0" max="10" form="filterRegions"
+                                <input type="number" name="regionPopUrbMax" placeholder="To" min="0" max="10"
+                                       form="filterRegions"
                                 <c:if test="${requestScope.regionPopUrbMax != null}">
                                        value="${requestScope.regionPopUrbMax}"
                                 </c:if>
@@ -142,10 +150,12 @@
                 </div>
             </div>
             <div class="card-footer">
-                <button type="submit" class="btn btn-sm btn-secondary" name="action" value="filterRegions" form="filterRegions">
+                <button type="submit" class="btn btn-sm btn-secondary" name="action" value="filterRegions"
+                        form="filterRegions">
                     Filter
                 </button>
-                <button type="submit" class="btn btn-sm btn-warning" name="action" value="resetRegions" form="resetRegions">
+                <button type="submit" class="btn btn-sm btn-warning" name="action" value="resetRegions"
+                        form="resetRegions">
                     Reset
                 </button>
                 <form action="Regions" id="resetRegions"></form>
@@ -500,7 +510,7 @@
     </div>
 </div>
 </body>
-<%@include file="../components/footer.jsp"%>
+<%@include file="../components/footer.jsp" %>
 <script type="text/javascript">
     function selectRegion(id) {
         //check if select input in table cause accidentally select region

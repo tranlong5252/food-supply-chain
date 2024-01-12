@@ -1,10 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Login Page</title>
-    <%@include file="components/providers.jsp"%>
+    <%@include file="components/providers.jsp" %>
 </head>
 <body>
 <%@include file="components/header.jsp" %>
@@ -17,7 +17,7 @@
                 <div class="card-header">
                     <h3>Login</h3>
                 </div>
-                <%@include file="components/message.jsp"%>
+                <%@include file="components/message.jsp" %>
                 <div class="card-body">
 
                     <form method="POST" id="login"></form>
@@ -42,7 +42,8 @@
 
                 </div>
                 <div class="card-footer">
-                    <a href="javascript:void(0)" style="text-decoration:none" onclick="location.href='https://www.youtube.com/watch?v=UqOReQEvwkM'">Forgot password?</a>
+                    <a href="javascript:void(0)" style="text-decoration:none"
+                       onclick="location.href='https://www.youtube.com/watch?v=UqOReQEvwkM'">Forgot password?</a>
                     <br>
                 </div>
             </div>
@@ -51,7 +52,7 @@
     </div>
 </div>
 </body>
-<%@include file="components/footer.jsp"%>
+<%@include file="components/footer.jsp" %>
 </html>
 <script>
     {

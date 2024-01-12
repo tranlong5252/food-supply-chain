@@ -18,13 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 
 public class RegionController extends HttpServlet {
 
     private void addRegion(HttpServletRequest req, HttpServletResponse resp) {
         //HttpSession session = req.getSession();
-        //List<Region> regions = RegionDao.getInstance().getList();
 
         // Nho try catch
         try {

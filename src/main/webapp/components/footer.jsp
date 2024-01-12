@@ -1,5 +1,5 @@
 <%--<div class="container my-5">--%>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <br>
 <br>
@@ -41,7 +41,8 @@
                         <a href="#!" class="text-white"><i class="far fa-file-alt fa-fw fa-sm me-2"></i>Regulations</a>
                     </li>
                     <li>
-                        <a href="#!" class="text-white"><i class="far fa-file-alt fa-fw fa-sm me-2"></i>Privacy policy</a>
+                        <a href="#!" class="text-white"><i class="far fa-file-alt fa-fw fa-sm me-2"></i>Privacy
+                            policy</a>
                     </li>
                 </ul>
             </div>
@@ -62,7 +63,8 @@
                         <a href="#!" class="text-white">05765 NY</a>
                     </li>
                     <li>
-                        <a href="#!" class="text-white"><i class="fas fa-briefcase fa-fw fa-sm me-2"></i>Send us a request</a>
+                        <a href="#!" class="text-white"><i class="fas fa-briefcase fa-fw fa-sm me-2"></i>Send us a
+                            request</a>
                     </li>
                 </ul>
             </div>
@@ -77,10 +79,12 @@
                         <a href="#!" class="text-white"><i class="fas fa-at fa-fw fa-sm me-2"></i>Help in purchasing</a>
                     </li>
                     <li>
-                        <a href="#!" class="text-white"><i class="fas fa-shipping-fast fa-fw fa-sm me-2"></i>Check the order status</a>
+                        <a href="#!" class="text-white"><i class="fas fa-shipping-fast fa-fw fa-sm me-2"></i>Check the
+                            order status</a>
                     </li>
                     <li>
-                        <a href="#!" class="text-white"><i class="fas fa-envelope fa-fw fa-sm me-2"></i>Join the newsletter</a>
+                        <a href="#!" class="text-white"><i class="fas fa-envelope fa-fw fa-sm me-2"></i>Join the
+                            newsletter</a>
                     </li>
                 </ul>
             </div>

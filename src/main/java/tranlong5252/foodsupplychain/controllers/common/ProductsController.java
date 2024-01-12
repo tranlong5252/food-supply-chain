@@ -31,7 +31,7 @@ public class ProductsController extends HttpServlet {
                     break;
             }
             String role = account.getRole() == 0 ? "client" : "admin";
-            req.getRequestDispatcher(role+"/products.jsp").forward(req, resp);
+            req.getRequestDispatcher(role + "/products.jsp").forward(req, resp);
         } else {
             HttpSession session = req.getSession();
             session.setAttribute("redirect", "Products");

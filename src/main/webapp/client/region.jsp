@@ -47,7 +47,8 @@
                                 Nature status
                             </div>
                             <div class="card-body">
-                                <p class="card-text">Nature Status: ${requestScope.region.natureStatus.agricultureLand}</p>
+                                <p class="card-text">Nature
+                                    Status: ${requestScope.region.natureStatus.agricultureLand}</p>
                                 <p class="card-text">Nature Status: ${requestScope.region.natureStatus.forestLand}</p>
                                 <p class="card-text">Nature Status: ${requestScope.region.natureStatus.disaster}</p>
                             </div>
@@ -80,7 +81,8 @@
                                 <tr class="status">
                                     <td>
                                         <label>
-                                            <input class="form-control-plaintext" type="text" name="statusName_${status.id}"
+                                            <input class="form-control-plaintext" type="text"
+                                                   name="statusName_${status.id}"
                                                    value="${status.name}"
                                                    form="editRegion_${requestScope.region.id}" required>
                                         </label>
@@ -97,9 +99,11 @@
                                     </td>
                                     <td>
                                         <label>
-                                            <input class="form-control-plaintext" type="number" name="statusValue_${status.id}"
+                                            <input class="form-control-plaintext" type="number"
+                                                   name="statusValue_${status.id}"
                                                    value="${status.value}"
-                                                   form="editRegion_${requestScope.region.id}" min="0" max="100" step=".01"
+                                                   form="editRegion_${requestScope.region.id}" min="0" max="100"
+                                                   step=".01"
                                                    required>
                                         </label>
                                     </td>
@@ -107,7 +111,8 @@
                                         <label>
                                             <input class="form-control-plaintext" type="number"
                                                    name="statusPotential_${status.id}"
-                                                   value="${status.potential}" form="editRegion_${requestScope.region.id}"
+                                                   value="${status.potential}"
+                                                   form="editRegion_${requestScope.region.id}"
                                                    min="0"
                                                    max="10" step="1" required>
                                         </label>
@@ -116,7 +121,8 @@
                                         <label>
                                             <input class="form-control-plaintext" type="number"
                                                    name="statusDevelopment_${status.id}"
-                                                   value="${status.development}" form="editRegion_${requestScope.region.id}"
+                                                   value="${status.development}"
+                                                   form="editRegion_${requestScope.region.id}"
                                                    min="0" max="10" step="1" required>
                                         </label>
                                     </td>

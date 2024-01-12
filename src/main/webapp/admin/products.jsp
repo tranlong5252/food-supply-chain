@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -90,13 +90,15 @@
                         </td>
                         <td>
                             <label>
-                                <input class="form-control-plaintext" type="number" name="productPrice" form="add" min="0"
+                                <input class="form-control-plaintext" type="number" name="productPrice" form="add"
+                                       min="0"
                                        placeholder="Enter price" required>
                             </label>
                         </td>
                         <td>
                             <label>
-                                <input class="form-control-plaintext" type="number" name="productQuantity" form="add" min="0"
+                                <input class="form-control-plaintext" type="number" name="productQuantity" form="add"
+                                       min="0"
                                        placeholder="Type" required>
                             </label>
                         </td>
