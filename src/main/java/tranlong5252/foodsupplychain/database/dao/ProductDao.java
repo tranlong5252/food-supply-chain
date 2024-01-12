@@ -1,6 +1,7 @@
 package tranlong5252.foodsupplychain.database.dao;
 
 import tranlong5252.foodsupplychain.database.DataAccess;
+import tranlong5252.foodsupplychain.model.ClientCompany;
 import tranlong5252.foodsupplychain.model.Product;
 
 import java.lang.reflect.InvocationTargetException;
@@ -18,5 +19,8 @@ public interface ProductDao extends DataAccess<Product> {
         }
     }
 
-    List<Product> getByCompany(int id);
+    List<Product> getByCompany(ClientCompany company);
+    List<Product> getByCompany(ClientCompany company, int page);
+
+    void addProductToCompany(Product product, ClientCompany company);
 }

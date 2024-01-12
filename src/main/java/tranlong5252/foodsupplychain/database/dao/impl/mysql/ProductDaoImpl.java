@@ -1,8 +1,10 @@
 package tranlong5252.foodsupplychain.database.dao.impl.mysql;
 
 import tranlong5252.foodsupplychain.database.dao.ProductDao;
+import tranlong5252.foodsupplychain.model.ClientCompany;
 import tranlong5252.foodsupplychain.model.Product;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -67,7 +69,10 @@ public class ProductDaoImpl implements ProductDao {
                 statement.setString(1, obj.getName());
                 statement.setDouble(2, obj.getPrice());
                 statement.setInt(3, obj.getQuantity());
-                return statement.executeUpdate();
+                statement.executeUpdate();
+                ResultSet generatedKeysResultSet = statement.getGeneratedKeys();
+                generatedKeysResultSet.next();
+                return generatedKeysResultSet.getInt(1);
             });
         } else {
             String stm = "UPDATE product SET name = ?, price = ?, quantity = ? WHERE id = ?";
@@ -107,16 +112,44 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    public List<Product> getByCompany(int id) {
+    public List<Product> getByCompany(ClientCompany company) {
         String stm = "SELECT * FROM product WHERE id IN (SELECT product_id FROM product_company WHERE company_id = ?)";
         return statement(stm, statement -> {
-            statement.setInt(1, id);
+            statement.setInt(1, company.getId());
             return fetchRecords(statement, resultSet -> newProduct(
                     resultSet.getInt("id"),
                     resultSet.getString("name"),
                     resultSet.getDouble("price"),
                     resultSet.getInt("quantity")
             ));
+        });
+    }
+
+    @Override
+    public List<Product> getByCompany(ClientCompany company, int page) {
+        int from = (page - 1) * 10;
+        int to = page * 10;
+        String stm = "SELECT * FROM product WHERE id IN (SELECT product_id FROM product_company WHERE company_id = ?) LIMIT ?, ?";
+        return statement(stm, statement -> {
+            statement.setInt(1, company.getId());
+            statement.setInt(2, from);
+            statement.setInt(3, to);
+            return fetchRecords(statement, resultSet -> newProduct(
+                    resultSet.getInt("id"),
+                    resultSet.getString("name"),
+                    resultSet.getDouble("price"),
+                    resultSet.getInt("quantity")
+            ));
+        });
+    }
+
+    @Override
+    public void addProductToCompany(Product product, ClientCompany company) {
+        String stm = "INSERT INTO product_company (product_id, company_id) VALUES (?, ?) ON DUPLICATE KEY UPDATE product_id = product_id";
+        statement(stm, statement -> {
+            statement.setInt(1, product.getId());
+            statement.setInt(2, company.getId());
+            return statement.executeUpdate();
         });
     }
 }

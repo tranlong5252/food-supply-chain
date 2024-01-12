@@ -1,7 +1,9 @@
 package tranlong5252.foodsupplychain.controllers.common;
 
+import tranlong5252.foodsupplychain.database.dao.ClientCompanyDao;
 import tranlong5252.foodsupplychain.database.dao.ProductDao;
 import tranlong5252.foodsupplychain.model.Account;
+import tranlong5252.foodsupplychain.model.ClientCompany;
 import tranlong5252.foodsupplychain.model.Product;
 import tranlong5252.foodsupplychain.model.ProductCompany;
 import tranlong5252.foodsupplychain.utils.Util;
@@ -79,7 +81,11 @@ public class ProductController extends HttpServlet {
             product.setId(id);
 
             Account account = Util.getAccount(req);
-            ProductCompany productCompany = new ProductCompany();
+            if (account != null && account.getRole() == 0) {
+                ClientCompany clientCompany = ClientCompanyDao.getInstance().getByUser(account);
+                ProductDao.getInstance().addProductToCompany(product, clientCompany);
+            }
+
         } catch (Exception e) {
             req.setAttribute("error", e.getMessage());
         }

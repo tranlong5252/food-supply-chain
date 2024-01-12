@@ -11,7 +11,7 @@ public class ProductCompany {
 
     public ProductCompany(ClientCompany clientCompany) {
         this.clientCompany = clientCompany;
-        this.products = ProductDao.getInstance().getByCompany(clientCompany.getId());
+        this.products = ProductDao.getInstance().getByCompany(clientCompany);
     }
 
     public ProductCompany() {
