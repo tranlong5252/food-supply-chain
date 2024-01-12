@@ -8,11 +8,12 @@ import java.util.List;
 
 public class ProductDaoImpl implements ProductDao {
 
-    private Product newProduct(int id, String name, double price) {
+    private Product newProduct(int id, String name, double price, int quantity) {
         Product product = new Product();
         product.setId(id);
         product.setName(name);
         product.setPrice(price);
+        product.setQuantity(quantity);
         return product;
     }
 
@@ -24,7 +25,8 @@ public class ProductDaoImpl implements ProductDao {
             return fetch(statement, resultSet -> newProduct(
                     resultSet.getInt("id"),
                     resultSet.getString("name"),
-                    resultSet.getDouble("price")
+                    resultSet.getDouble("price"),
+                    resultSet.getInt("quantity")
             ));
         });
     }
@@ -35,7 +37,8 @@ public class ProductDaoImpl implements ProductDao {
         return statement(stm, statement -> fetchRecords(statement, resultSet -> newProduct(
                 resultSet.getInt("id"),
                 resultSet.getString("name"),
-                resultSet.getDouble("price")
+                resultSet.getDouble("price"),
+                resultSet.getInt("quantity")
         )));
     }
 
@@ -50,7 +53,8 @@ public class ProductDaoImpl implements ProductDao {
             return fetchRecords(statement, resultSet -> newProduct(
                     resultSet.getInt("id"),
                     resultSet.getString("name"),
-                    resultSet.getDouble("price")
+                    resultSet.getDouble("price"),
+                    resultSet.getInt("quantity")
             ));
         });
     }
@@ -58,18 +62,20 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public int update(Product obj) {
         if (obj.getId() == 0) {
-            String stm = "INSERT INTO product (name, price) VALUES (?, ?)";
+            String stm = "INSERT INTO product (name, price, quantity) VALUES (?, ?, ?)";
             return statementWithKey(stm, statement -> {
                 statement.setString(1, obj.getName());
                 statement.setDouble(2, obj.getPrice());
+                statement.setInt(3, obj.getQuantity());
                 return statement.executeUpdate();
             });
         } else {
-            String stm = "UPDATE product SET name = ?, price = ? WHERE id = ?";
+            String stm = "UPDATE product SET name = ?, price = ?, quantity = ? WHERE id = ?";
             statement(stm, statement -> {
                 statement.setString(1, obj.getName());
                 statement.setDouble(2, obj.getPrice());
-                statement.setInt(3, obj.getId());
+                statement.setInt(3, obj.getQuantity());
+                statement.setInt(4, obj.getId());
                 return statement.executeUpdate();
             });
             return obj.getId();
@@ -108,7 +114,8 @@ public class ProductDaoImpl implements ProductDao {
             return fetchRecords(statement, resultSet -> newProduct(
                     resultSet.getInt("id"),
                     resultSet.getString("name"),
-                    resultSet.getDouble("price")
+                    resultSet.getDouble("price"),
+                    resultSet.getInt("quantity")
             ));
         });
     }

@@ -49,7 +49,7 @@
                                 <label>
                                     <input class="form-control-plaintext" type="number" name="productQuantity" min="0"
                                            form="edit_${product.id}"
-                                        <%--                                           value="${product.quantity}">--%>
+                                           value="${product.quantity}">
                                 </label>
                             </td>
                             <td>
