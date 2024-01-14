@@ -29,12 +29,6 @@ public class RegionsController extends HttpServlet {
                 case "filterRegions":
                     filterRegions(req, resp);
                     break;
-                case "resetRegions":
-                default:
-                    req.setAttribute("regions", RegionDao.getInstance().getList());
-                    break;
-            }
-            switch (action != null ? action : "") {
                 case "selectRegion":
                     int regionId = Integer.parseInt(req.getParameter("regionId"));
                     Region region = RegionDao.getInstance().get(regionId);
@@ -44,16 +38,16 @@ public class RegionsController extends HttpServlet {
                 case "closeRegionStatus":
                     req.getSession().removeAttribute("region");
                     resp.sendRedirect("Regions");
-                    break;
+                    return;
                 case "resetRegions":
                     resp.sendRedirect("Regions");
-                    break;
-                //case "filterRegions":
-
+                    return;
                 default:
+                    req.setAttribute("regions", RegionDao.getInstance().getList());
                     req.getRequestDispatcher("admin/regions.jsp").forward(req, resp);
-                    break;
+                    return;
             }
+            req.getRequestDispatcher("admin/regions.jsp").forward(req, resp);
         }
         if (account != null && account.getRole() == 0) {
             resp.sendRedirect("ClientRegion");
@@ -72,7 +66,6 @@ public class RegionsController extends HttpServlet {
 
 
     private void filterRegions(HttpServletRequest req, HttpServletResponse resp) {
-        HttpSession session = req.getSession();
         String popDisMin = req.getParameter("regionPopDisMin");
         String popDisMax = req.getParameter("regionPopDisMax");
         String popMigMin = req.getParameter("regionPopMigMin");
